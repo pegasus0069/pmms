@@ -17,7 +17,7 @@
                 </a>
             </li>
             <?php
-                if ( $_SESSION['userType'] == 'admin' )
+                if ( $_SESSION['userType'] == 'Admin' )
                 {
             ?>
             <li class="nav-item">
@@ -28,7 +28,7 @@
             </li>
             <?php
                 }
-                if ( $_SESSION['userType'] == 'admin' )
+                if ( $_SESSION['userType'] == 'Admin' )
                 {
             ?>
             <li class="nav-item">
@@ -39,7 +39,7 @@
             </li>
             <?php
                 }
-                if ( $_SESSION['userType'] != 'user' )
+                if ( $_SESSION['userType'] != 'User' )
                 {
             ?>
             <li class="nav-item">

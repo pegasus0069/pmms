@@ -4,7 +4,7 @@
 ?>
 <div class="container-fluid">
   <?php
-    if( $_SESSION['userType'] != 'user' )
+    if( $_SESSION['userType'] != 'User' )
     {
   ?>
   <!-- Start Table for Complaints To You/Your Department -->
@@ -23,7 +23,7 @@
           <div class="table-responsive">
             <table class="table" id="complaints-table">
               <thead class="text-primary text-center">
-                <th>ID</th><th>Subject</th><th>Description</th><th>Date</th><th>Status</th><?php if ( $_SESSION['userType'] != 'user' ) {echo"<th>Action</th>";}?>
+                <th>ID</th><th>Subject</th><th>Description</th><th>Date</th><th>Status</th><?php if ( $_SESSION['userType'] != 'User' ) {echo"<th>Action</th>";}?>
               </thead>
               <tbody>
               <?php
@@ -40,13 +40,13 @@
                       echo "<td class=\"d-none\">".$row['id']."</td>";
                       echo "<td>".$id."</td><td>".$row['subject']."</td><td>".$row['description']."</td><td>".$row['created_at']."</td><td class=\"text-primary font-weight-bold\">".$row['status']."</td>";
 
-                      if ( $_SESSION['userType'] != 'user' )
+                      if ( $_SESSION['userType'] != 'User' )
                       {
-                        if ( $row['status'] == 'pending' )
-                          echo "<td><button class=\"btn btn-info btn-round btn-fab\" id=\"approved\"><i class=\"material-icons\" data-toggle=\"tooltip\" data-html=\"true\" title=\"Approve\">thumb_up_alt</i></button><button class=\"btn btn-danger btn-round btn-fab\" id=\"rejected\"><i class=\"material-icons\" data-toggle=\"tooltip\" data-html=\"true\" title=\"Reject\">thumb_down_alt</i></button></td>";
-                        else if ( $row['status'] == 'approved')
-                          echo "<td><button class=\"btn btn-success btn-round btn-fab\" id=\"fixed\"><i class=\"material-icons\" data-toggle=\"tooltip\" data-html=\"true\" title=\"Fixed\">build</i></button></td>";
-                        else if ( $row['status'] == 'rejected' )
+                        if ( $row['status'] == 'Pending' )
+                          echo "<td><button class=\"btn btn-info btn-round btn-fab\" id=\"Approved\"><i class=\"material-icons\" data-toggle=\"tooltip\" data-html=\"true\" title=\"Approve\">thumb_up_alt</i></button><button class=\"btn btn-danger btn-round btn-fab\" id=\"Rejected\"><i class=\"material-icons\" data-toggle=\"tooltip\" data-html=\"true\" title=\"Reject\">thumb_down_alt</i></button></td>";
+                        else if ( $row['status'] == 'Approved')
+                          echo "<td><button class=\"btn btn-success btn-round btn-fab\" id=\"Resolved\"><i class=\"material-icons\" data-toggle=\"tooltip\" data-html=\"true\" title=\"Resolved\">build</i></button></td>";
+                        else if ( $row['status'] == 'Rejected' )
                           echo "<td>No Action</td>";
                         else
                           echo "<td>No Action</td>";
@@ -58,7 +58,7 @@
                   {
                     echo "<tr class=\"text-center\">";
                     echo "<td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td>";
-                    if( $_SESSION['userType'] != 'user' ) echo "<td>-</td>";
+                    if( $_SESSION['userType'] != 'User' ) echo "<td>-</td>";
                     echo "</tr>";   
                   }
                   // Free result set
@@ -74,7 +74,7 @@
   <!-- End Table for Complaints To You/Your Department -->
   <?php
     }
-    if ( $_SESSION['userType'] != 'admin' )
+    if ( $_SESSION['userType'] != 'Admin' )
     {
   ?>
   <!-- Start Table for Complaints By You -->
@@ -88,7 +88,7 @@
               <p class="card-category">Listing of all Complaints with Status filed by You</p>
             </div>
             <?php
-              if ( $_SESSION['userType'] != 'admin' )
+              if ( $_SESSION['userType'] != 'Admin' )
               {
             ?>
             <div class="col-12 col-xl-3 col-lg-3">
@@ -310,9 +310,9 @@
             // alert('success');
             switch(action)
             {
-              case 'approved': setAlertColor = 'info'; break;
-              case 'rejected': setAlertColor = 'warning'; break;
-              case 'fixed': setAlertColor = 'success'; break;
+              case 'Approved': setAlertColor = 'info'; break;
+              case 'Rejected': setAlertColor = 'warning'; break;
+              case 'Resolved': setAlertColor = 'success'; break;
             }
 
             md.showNotification('top', 'right', setAlertColor, 'Complaint status updated to '+action);

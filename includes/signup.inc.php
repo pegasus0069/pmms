@@ -81,7 +81,7 @@ if($_POST)
                 }
                 else
                 {
-                    $role = 'user';
+                    $role = 'User';
                     $hashedPwd = password_hash($password, PASSWORD_DEFAULT);
                     
                     mysqli_stmt_bind_param($stmt, "sssss", $name, $phone, $email, $role, $hashedPwd);

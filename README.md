@@ -21,5 +21,5 @@ This is Process Management & Monitoring System built with PHP & mySQL (back-end)
 The application can be tested using below credentials which are seeded in the database :
 
 -   Admin 			 -> email = admin@demo.com, password = Admin@1234
--   Caretaker / Department Heads -> email = caretaker@demo.com, password = Caretaker@1234
+-   Resolver -> email = caretaker@demo.com, password = Caretaker@1234
 -   User 			 -> email = usert@demo.com, password = User@1234

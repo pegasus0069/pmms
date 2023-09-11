@@ -1,7 +1,7 @@
 <?php
   session_start();
   include_once('../config/db.php');
-  if ( $_SESSION['userType'] == 'admin' )
+  if ( $_SESSION['userType'] == 'Admin' )
   {
 ?>
 <div class="container-fluid">
@@ -14,7 +14,7 @@
           <div class="row">
             <div class="col-12 col-xl-10 col-lg-8">
               <h4 class="card-title">Users</h4>
-              <p class="card-category">All Registered Users and Caretakers</p>
+              <p class="card-category">All Registered Users and Resolvers</p>
             </div>
             <div class="col-12 col-xl-2 col-lg-2">
               <!-- Button trigger modal -->
@@ -42,7 +42,7 @@
                       echo "<tr class=\"text-center\">";
                       echo "<td class=\"d-none\">".$row['id']."</td>";
                       echo "<td>".$id."</td><td>".$row['name']."</td><td>".$row['email']."</td><td>".$row['phone']."</td><td class=\"text-primary font-weight-bold\">".$row['role'];
-                      if ( $row['role'] != 'user' )
+                      if ( $row['role'] != 'User' )
                         echo "</td><td>".$row['dept_name']."</td>";
                       else
                         echo "<td>-</td>";     
@@ -113,9 +113,9 @@
               <div class="form-group">
                 <label for="role" class="bmd-label-floating">Role</label>
                 <select class="form-control" name="createUserRole" required>
-                  <option value="admin">Admin</option>
-                  <option value="caretaker">Department Head</option>
-                  <option value="user" selected>User</option>
+                  <option value="Admin">Admin</option>
+                  <option value="Resolver">Resolver</option>
+                  <option value="User" selected>User</option>
                 </select>
               </div>
             </div>
@@ -209,9 +209,9 @@
               <div class="form-group">
                 <label for="role" class="bmd-label-floating">Role</label>
                 <select class="form-control" name="updateUserRole" required>
-                  <option value="admin">Admin</option>
-                  <option value="caretaker">Department Head</option>
-                  <option value="user">User</option>
+                  <option value="Admin">Admin</option>
+                  <option value="Resolver">Resolver</option>
+                  <option value="User">User</option>
                 </select>
               </div>
             </div>

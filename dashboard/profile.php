@@ -58,7 +58,7 @@
             </div>
             <!-- Department Info -->
             <?php
-                if( $row['role'] != 'user' )
+                if( $row['role'] != 'User' )
                 {
             ?>
             <div class="row">

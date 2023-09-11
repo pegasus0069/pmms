@@ -5,7 +5,7 @@
 <div class="container-fluid">
     <!-- Complaints to a user/ user's department -->
     <?php
-        if( $_SESSION['userType'] != 'user' )
+        if( $_SESSION['userType'] != 'User' )
         {
     ?>
     <div class="row">
@@ -49,7 +49,7 @@
                                 <div class="card-icon"><a href="#process"><i class="material-icons">thumb_up_alt</i></a></div>
                                 <p class="card-category">Approved</p>
                                 <?php
-                                    $sql = "SELECT complaints.created_at FROM `complaints` JOIN `users` ON complaints.dept_id=users.dept_id WHERE users.id='".$_SESSION['userId']."' AND complaints.status='approved' ORDER BY complaints.created_at DESC";
+                                    $sql = "SELECT complaints.created_at FROM `complaints` JOIN `users` ON complaints.dept_id=users.dept_id WHERE users.id='".$_SESSION['userId']."' AND complaints.status='Approved' ORDER BY complaints.created_at DESC";
                                     $result = mysqli_query($conn, $sql);
                                     $lastRecord = "No Record";
                                     
@@ -72,9 +72,9 @@
                         <div class="card card-stats">
                             <div class="card-header card-header-success card-header-icon">
                                 <div class="card-icon"><a href="#process"><i class="material-icons">build</i></a></div>
-                                <p class="card-category">Fixed</p>
+                                <p class="card-category">Resolved</p>
                                 <?php
-                                    $sql = "SELECT complaints.created_at FROM `complaints` JOIN `users` ON complaints.dept_id=users.dept_id WHERE users.id='".$_SESSION['userId']."' AND complaints.status='fixed' ORDER BY complaints.created_at DESC";
+                                    $sql = "SELECT complaints.created_at FROM `complaints` JOIN `users` ON complaints.dept_id=users.dept_id WHERE users.id='".$_SESSION['userId']."' AND complaints.status='Resolved' ORDER BY complaints.created_at DESC";
                                     $result = mysqli_query($conn, $sql);
                                     $lastRecord = "No Record";
                                     
@@ -99,7 +99,7 @@
                                 <div class="card-icon"><a href="#process"><i class="material-icons">info_outline</i></a></div>
                                 <p class="card-category">Pending</p>
                                 <?php
-                                    $sql = "SELECT complaints.created_at FROM `complaints` JOIN `users` ON complaints.dept_id=users.dept_id WHERE users.id='".$_SESSION['userId']."' AND complaints.status='pending' ORDER BY complaints.created_at DESC";
+                                    $sql = "SELECT complaints.created_at FROM `complaints` JOIN `users` ON complaints.dept_id=users.dept_id WHERE users.id='".$_SESSION['userId']."' AND complaints.status='Pending' ORDER BY complaints.created_at DESC";
                                     $result = mysqli_query($conn, $sql);
                                     $lastRecord = "No Record";
                                     
@@ -126,7 +126,7 @@
     
     <?php
         }
-        if ( $_SESSION['userType'] != 'admin' )
+        if ( $_SESSION['userType'] != 'Admin' )
         {
     ?>
 
@@ -172,7 +172,7 @@
                                 <div class="card-icon"><i class="material-icons">thumb_up_alt</i></div>
                                 <p class="card-category">Approved</p>
                                 <?php
-                                    $sql = "SELECT `created_at` FROM `complaints` WHERE `user_id`='".$_SESSION['userId']."' AND `status`='approved' ORDER BY `id` DESC";
+                                    $sql = "SELECT `created_at` FROM `complaints` WHERE `user_id`='".$_SESSION['userId']."' AND `status`='Approved' ORDER BY `id` DESC";
                                     $result = mysqli_query($conn, $sql);
                                     $lastRecord = "No Record";
                                     
@@ -195,9 +195,9 @@
                         <div class="card card-stats">
                             <div class="card-header card-header-success card-header-icon">
                                 <div class="card-icon"><i class="material-icons">build</i></div>
-                                <p class="card-category">Fixed</p>
+                                <p class="card-category">Resolved</p>
                                 <?php
-                                    $sql = "SELECT `created_at` FROM `complaints` WHERE `user_id`='".$_SESSION['userId']."' AND `status`='fixed' ORDER BY `id` DESC";
+                                    $sql = "SELECT `created_at` FROM `complaints` WHERE `user_id`='".$_SESSION['userId']."' AND `status`='Resolved' ORDER BY `id` DESC";
                                     $result = mysqli_query($conn, $sql);
                                     $lastRecord = "No Record";
                                     
@@ -222,7 +222,7 @@
                                 <div class="card-icon"><i class="material-icons">info_outline</i></div>
                                 <p class="card-category">Pending</p>
                                 <?php
-                                    $sql = "SELECT `created_at` FROM `complaints` WHERE `user_id`='".$_SESSION['userId']."' AND `status`='pending' ORDER BY `id` DESC";
+                                    $sql = "SELECT `created_at` FROM `complaints` WHERE `user_id`='".$_SESSION['userId']."' AND `status`='Pending' ORDER BY `id` DESC";
                                     $result = mysqli_query($conn, $sql);
                                     $lastRecord = "No Record";
                                     
@@ -306,10 +306,10 @@
         <div class="col-lg-7 col-md-12">
             <div class="card">
                 <div class="card-header card-header-primary">
-                    <h4 class="card-title">Department Heads / Caretakers</h4>
+                    <h4 class="card-title">Resolvers</h4>
                     <p class="card-category">
                         <?php
-                            $sql    = "SELECT `created_at` FROM `users` WHERE `role`='caretaker' ORDER BY `id` DESC LIMIT 1";
+                            $sql    = "SELECT `created_at` FROM `users` WHERE `role`='Resolver' ORDER BY `id` DESC LIMIT 1";
                             $result = mysqli_query($conn, $sql);
                             $lastRecord = "No Record";
 
@@ -331,7 +331,7 @@
                         </thead>
                         <tbody>
                             <?php
-                                $sql = "SELECT users.id,users.name,users.email,users.phone,departments.name AS dept_name FROM `users` JOIN `departments` ON users.dept_id=departments.code WHERE users.role='caretaker'";
+                                $sql = "SELECT users.id,users.name,users.email,users.phone,departments.name AS dept_name FROM `users` JOIN `departments` ON users.dept_id=departments.code WHERE users.role='Resolver'";
                                 $result = mysqli_query($conn, $sql);
                                 $id = 0;
 

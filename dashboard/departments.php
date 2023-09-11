@@ -1,7 +1,7 @@
 <?php
   session_start();
   include_once('../config/db.php');
-  if ( $_SESSION['userType'] == 'admin' )
+  if ( $_SESSION['userType'] == 'Admin' )
   {
 ?>
 <div class="container-fluid">

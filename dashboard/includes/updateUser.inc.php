@@ -14,13 +14,13 @@ if($_POST)
     {
         $rowId         = $_POST['updateUserIdentity'];
         $newRole       = $_POST['updateUserRole'];
-        if( $newRole != 'user' )
+        if( $newRole != 'User' )
             $newDepartment = $_POST['updateUserDepartment'];
         else
             $newDepartment = null;
         
         // Initial Validation and Error Handling
-        if( $newRole != 'user' && ( $newDepartment == null || empty($newDepartment) || $newDepartment == 'null' ) )
+        if( $newRole != 'User' && ( $newDepartment == null || empty($newDepartment) || $newDepartment == 'null' ) )
         {
             $error_log['updateUserDepartment'] = 'Select a Department';
         }
