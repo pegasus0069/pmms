@@ -1,11 +1,11 @@
-## Complaint Management System(CMS)
+## Process Management & Monitoring System (PMMS)
 -------------------------------------------
 
-This is Complaint Management System built with PHP & mySQL(back-end), AJAX (client-server Requests), Material+Boostrap (Front-end) and jQuery.
+This is Process Management & Monitoring System built with PHP & mySQL (back-end), AJAX (client-server Requests), Material+Boostrap (Front-end) and jQuery.
 
 ### Installation for Xampp
 ----------------
-01. `git clone https://github.com/vidush-dixit/CMS.git`
+01. `git clone https://github.com/pegasus0069/pmms.git`
 02. `move Project folder inside xampp/htdocs/ folder`
 03. `open localhost/phpmyadmin`
 04. `create new database and import Database/cms.sql file`
@@ -13,7 +13,7 @@ This is Complaint Management System built with PHP & mySQL(back-end), AJAX (clie
 
 ### Resources & Reference File
 ------------------------------
-01. `Sample Database File` => `cms.sql`
+01. `Sample Database File` => `pmms.sql`
 02. `Web Portal & Project Snapshots` => `Projects_Screenshots.rar`
 
 ### Testing & Credentials
