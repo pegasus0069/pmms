@@ -11,9 +11,9 @@
     <div class="row">
         <div class="card" style="background: none !important;">
             <div class="card-header card-header-primary">
-                <h4 class="card-title">Processes to You</h4>
+                <h4 class="card-title">Tickets Issued to You</h4>
                 <p class="card-category">
-                    Stats of the Processes handled by you / your department 
+                    Stats of the Tickets handled by you / your department 
                 </p>
             </div>
             <div class="card-body table-responsive">
@@ -134,9 +134,9 @@
     <div class="row">
         <div class="card" style="background: none !important;">
             <div class="card-header card-header-primary">
-                <h4 class="card-title">Processes by You</h4>
+                <h4 class="card-title">Tickets Issued by You</h4>
                 <p class="card-category">
-                    Stats of the Processes filed by you 
+                    Stats of the Tickets filed by you 
                 </p>
             </div>
             <div class="card-body table-responsive">

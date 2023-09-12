@@ -21,18 +21,7 @@
                 </div>
             </form>
             <ul class="navbar-nav">
-                <li class="nav-item dropdown">
-                    <a class="nav-link" href="javscript:void(0)" id="notificationDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="material-icons">notifications</i>
-                        <span class="notification">1</span>
-                        <p class="d-lg-none d-md-block">
-                            Notification
-                        </p>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="notificationDropdown">
-                        <a class="dropdown-item" href="javascript:void(0)">Mike John responded to your email</a>
-                    </div>
-                </li>
+
                 <li class="nav-item dropdown">
                     <a class="nav-link" href="javscript:void(0)" id="accountDropdown" data-toggle="dropdown" aria-expanded="false">
                     <i class="material-icons">person</i>

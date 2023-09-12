@@ -8,34 +8,34 @@
     <!-- First Image Section -->
     <div class="jumbotron sectionImg imageSec1">
         <h1 class="display-3 pt-1">Welcome to<br>Process Management & Monitoring System</h1>
-        <p class="lead">Got Processes, We are here to Assist.</p>
+
         <p class="lead">
-            <a class="btn btn-danger btn-lg btn-md" href="#" role="button">File a Process</a>
-            <a class="btn btn-primary btn-lg btn-md" href="#" role="button">Check Status</a>
+            <a class="btn btn-danger btn-lg btn-md" href="./dashboard/#process" role="button">Issue a Ticket</a>
+            <a class="btn btn-primary btn-lg btn-md" href="./dashboard/#processtoyou" role="button">Check Status</a>
         </p>
     </div>
 
-    <!-- First Content Section -->
+    <!-- First Content Section 
     <div class="jumbotron sectionContent contentSec" id="announcements">
         <h1 class="display-3">Announcements Section</h1>
         <p class="lead">Here you will find announcements posted by various Department Heads and Website Admin regarding new updates and features.</p>
-    </div>
+    </div> -->
     <!-- End First Parallax Section -->
      
     <!-- Second Parallax Section -->
-    <!-- Second Image Section -->
+    <!-- Second Image Section 
     <div class="jumbotron sectionImg imageSec2">
         <h1 class="display-3">Announcements</h1>
         <p class="lead">Stay up-to-date with latest announcements from various Department Heads.</p>
         <p class="lead">
             <a class="btn btn-success btn-lg btn-md" href="#" role="button">Check Announcements</a>
         </p>
-    </div>
+    </div>-->
 
     <!-- Second Content Section -->
     <div class="jumbotron sectionContent contentSec" id="about">
         <h1 class="display-3">About the Project</h1>
-        <p class="lead">We maintain and manages all the Processes.<br>
+        <p class="lead">This systen maintain and manages all the Processes.<br>
         This E-Process Management & Monitoring System is an interactive solution for solving the Processes online which saves lots of time for the stakeholders.</p>
     </div>
     <!-- End Second Parallax Section -->

@@ -4,40 +4,30 @@
 ?>
 <div class="container-fluid">
   <?php
-    if ( $_SESSION['userType'] != 'Admin' )
+    if( $_SESSION['userType'] != 'User' )
     {
   ?>
-  <!-- Start Table for Complaints By You -->
+  <!-- Start Table for Complaints To You/Your Department -->
   <div class="row">
     <div class="col-md-12">
       <div class="card">
         <div class="card-header card-header-primary">
           <div class="row">
             <div class="col-12 col-xl-9 col-lg-8">
-              <h4 class="card-title">Tickets Issued By You</h4>
-              <p class="card-category">Listing of all Tickets with Status filed by You</p>
+              <h4 class="card-title">Tickets Issued To You</h4>
+              <p class="card-category">Listing of all Tickets with Status and Actions filed to your Department</p>
             </div>
-            <?php
-              if ( $_SESSION['userType'] != 'Admin' )
-              {
-            ?>
-            <div class="col-12 col-xl-3 col-lg-3">
-                <button class="card-title btn btn-success pl-0 mt-1" data-toggle="modal" data-target="#createComplaintModal"><i class="material-icons pl-3 pr-2">add</i>New Ticket</button>
-            </div>
-            <?php
-              }
-            ?>
           </div>
         </div>
         <div class="card-body">
           <div class="table-responsive">
             <table class="table" id="complaints-table">
               <thead class="text-primary text-center">
-                <th>ID</th><th>Department</th><th>Subject</th><th>Description</th><th>Date</th><th>Status</th>
+                <th>ID</th><th>Subject</th><th>Description</th><th>Date</th><th>Status</th><?php if ( $_SESSION['userType'] != 'User' ) {echo"<th>Action</th>";}?>
               </thead>
               <tbody>
               <?php
-                  $sql = "SELECT * FROM complaints where user_id='".$_SESSION['userId']."'";
+                  $sql = "SELECT complaints.id,complaints.subject,complaints.description,complaints.created_at,complaints.status FROM `complaints` JOIN `users` ON complaints.dept_id=users.dept_id WHERE users.id='".$_SESSION['userId']."'";
                   $result = mysqli_query($conn, $sql);
                   $id = 0;
 
@@ -48,7 +38,19 @@
                       $id += 1;
                       echo "<tr class=\"text-center\">";
                       echo "<td class=\"d-none\">".$row['id']."</td>";
-                      echo "<td>".$id."</td><td>".$row['dept_id']."</td><td>".$row['subject']."</td><td>".$row['description']."</td><td>".$row['created_at']."</td><td class=\"text-primary font-weight-bold\">".$row['status']."</td>";
+                      echo "<td>".$id."</td><td>".$row['subject']."</td><td>".$row['description']."</td><td>".$row['created_at']."</td><td class=\"text-primary font-weight-bold\">".$row['status']."</td>";
+
+                      if ( $_SESSION['userType'] != 'User' )
+                      {
+                        if ( $row['status'] == 'Pending' )
+                          echo "<td><button class=\"btn btn-info btn-round btn-fab\" id=\"Approved\"><i class=\"material-icons\" data-toggle=\"tooltip\" data-html=\"true\" title=\"Approve\">thumb_up_alt</i></button><button class=\"btn btn-danger btn-round btn-fab\" id=\"Rejected\"><i class=\"material-icons\" data-toggle=\"tooltip\" data-html=\"true\" title=\"Reject\">thumb_down_alt</i></button></td>";
+                        else if ( $row['status'] == 'Approved')
+                          echo "<td><button class=\"btn btn-success btn-round btn-fab\" id=\"Resolved\"><i class=\"material-icons\" data-toggle=\"tooltip\" data-html=\"true\" title=\"Resolved\">build</i></button></td>";
+                        else if ( $row['status'] == 'Rejected' )
+                          echo "<td>No Action</td>";
+                        else
+                          echo "<td>No Action</td>";
+                      }
                       echo "</tr>";
                     }
                   }
@@ -56,6 +58,7 @@
                   {
                     echo "<tr class=\"text-center\">";
                     echo "<td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td>";
+                    if( $_SESSION['userType'] != 'User' ) echo "<td>-</td>";
                     echo "</tr>";   
                   }
                   // Free result set
@@ -68,102 +71,18 @@
       </div>
     </div>
   </div>
-  <!-- End Table for Complaints By You -->
+  <!-- End Table for Complaints To You/Your Department -->
   <?php
     }
   ?>
 </div>
-
-<!-- Create Complaints Modal -->
-<!-- Modal -->
-<div class="modal fade" id="createComplaintModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content card">
-      <div class="modal-header card-header-primary">
-        <h5 class="modal-title card-title" id="exampleModalLongTitle">Register New Process</h5>
-        <button type="button" class="close card-header-icon" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <form id="createComplaint-form" method="post" class="card-body">
-        <div class="modal-body">
-          
-          <!-- Category -->
-          <div class="row">
-            <div class="col-md-12">
-              <div class="form-group">
-                <label for="Role" class="bmd-label-floating">Department</label>
-                <select class="form-control" name="complaintDepartment" required>
-                <?php
-                    $sql = "SELECT * FROM departments";
-                    $result = mysqli_query($conn, $sql);
-
-                    if (mysqli_num_rows($result) > 0)
-                    {
-                      $count = 1;
-                      while($row = mysqli_fetch_assoc($result))
-                      {
-                        if($count == 1)
-                        {
-                          echo "<option value=".$row['code']." selected>".$row['name']."</option>";
-                          $count += 1;
-                        }
-                        else
-                          echo "<option value=".$row['code'].">".$row['name']."</option>";                        
-                      }
-                    }
-                    else
-                    {
-                      echo "<option value='NULL' selected>No Department Found!</option>";
-                    }
-                    // Free result set
-                    mysqli_free_result($result);
-                  ?>
-                </select>
-              </div>
-            </div>
-          </div>
-          
-          <!-- Subject -->
-          <div class="row">
-            <div class="col-md-12">
-              <div class="form-group">
-                <label class="bmd-label-floating">Subject</label>
-                <input type="text" name="complaintSubject" class="form-control" required>
-              </div>
-            </div>
-          </div>
-
-          <!-- Description -->
-          <div class="row">
-            <div class="col-md-12">
-              <div class="form-group">
-                <label for="description">Description</label>
-                <textarea class="form-control" name="complaintBody" aria-describedby="descriptionHelp" rows="3" required></textarea>
-                <small id="descriptionHelp" class="form-text text-muted">Max. word limit - 250</small>
-              </div>
-            </div>
-          </div>
-          <div class="clearfix"></div>
-        </div>
-        
-        <!-- Submit Buttons -->
-        <div class="modal-footer">
-          <button type="reset" class="btn btn-danger btn-round">Reset</button>
-          <button type="submit" class="btn btn-success btn-round">Submit</button>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
-
 <script>
   // Toggle Department Select Menu
   $(document).ready(function(){
     
     // Create Complaint form Request
     $('#createComplaint-form button[type="submit"]').click(function(e){
-      e.preventDefault();
+      e.);
       
       $('#createComplaint-form input').removeClass('is-invalid');
       $('.invalid-feedback').remove();
@@ -209,11 +128,11 @@
         },
         error: function(){$("#createComplaint-form .modal-footer").before('<div class="alert alert-danger">Something went Wrong! Try Again</div>');}
       });
-    });
+    }, {passive:false});
 
     // Action Buttons Request
     $('#complaints-table button').click(function(e){
-      e.preventDefault();
+      e.);
 
       action = $(this).attr('id');
       name   = $(this).parent().siblings('.d-none').text();
@@ -251,6 +170,6 @@
         },
         error: function(){md.showNotification('top', 'right', 'danger', 'Something went Wrong! Try Again');}
       });
-    });
+    }, {passive:false});
   });
 </script>

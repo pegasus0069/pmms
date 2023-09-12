@@ -15,7 +15,7 @@ if (isset($_SESSION['userId']) && isset($_SESSION['userName']))
   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/favicon.png">
   <link rel="icon" type="image/png" href="../assets/img/favicon.png">
 
-  <title>CMS | Dashboard</title>
+  <title>PMMS | Dashboard</title>
 
   <?php include_once('./styles.php');?>
   

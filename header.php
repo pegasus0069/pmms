@@ -67,9 +67,9 @@
                     <li class="nav-item active">
                         <a class="nav-link" href="<?php $siteUrl?>#home">Home<span class="sr-only">(current)</span></a>
                     </li>
-                    <li class="nav-item">
+                    <!--<li class="nav-item">
                         <a class="nav-link" href="<?php $siteUrl?>#announcements">Announcements</a>
-                    </li> 
+                    </li> -->
                     <li class="nav-item">
                         <a class="nav-link" href="<?php $siteUrl?>#about">About</a>
                     </li>
