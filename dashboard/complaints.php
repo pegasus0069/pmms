@@ -14,8 +14,8 @@
         <div class="card-header card-header-primary">
           <div class="row">
             <div class="col-12 col-xl-9 col-lg-8">
-              <h4 class="card-title">Complaints To You</h4>
-              <p class="card-category">Listing of all Complaints with Status and Actions filed to your Department</p>
+              <h4 class="card-title">Tickets To You</h4>
+              <p class="card-category">Listing of all Tickets with Status and Actions filed to your Department</p>
             </div>
           </div>
         </div>
@@ -84,8 +84,8 @@
         <div class="card-header card-header-primary">
           <div class="row">
             <div class="col-12 col-xl-9 col-lg-8">
-              <h4 class="card-title">Complaints By You</h4>
-              <p class="card-category">Listing of all Complaints with Status filed by You</p>
+              <h4 class="card-title">Ticketss By You</h4>
+              <p class="card-category">Listing of all Ticketss with Status filed by You</p>
             </div>
             <?php
               if ( $_SESSION['userType'] != 'Admin' )
