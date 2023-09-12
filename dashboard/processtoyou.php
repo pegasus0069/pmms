@@ -82,7 +82,7 @@
     
     // Create Complaint form Request
     $('#createComplaint-form button[type="submit"]').click(function(e){
-      e.);
+      e.preventDefault();
       
       $('#createComplaint-form input').removeClass('is-invalid');
       $('.invalid-feedback').remove();
@@ -132,7 +132,7 @@
 
     // Action Buttons Request
     $('#complaints-table button').click(function(e){
-      e.);
+      e.preventDefault();
 
       action = $(this).attr('id');
       name   = $(this).parent().siblings('.d-none').text();

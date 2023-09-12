@@ -147,8 +147,6 @@
             
             <script>
                 $(document).ready(function() {
-
-
             // Handle click event on nav-sub-item
                     $('.nav-sub-item').click(function(event) {
             // Prevent the event from bubbling up to parent elements
@@ -158,6 +156,9 @@
             // Add active class to the clicked sub-item
                         $(this).addClass('active');
                         $(this).closest('.nav-item').addClass('active');
+                    });
+                    $('.nav-item').click(function(event){
+                        $('.nav-sub-item').removeClass('active');
                     });
                 });
 
