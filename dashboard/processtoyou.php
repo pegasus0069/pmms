@@ -1,6 +1,7 @@
 <?php
   session_start();
   include_once('../config/db.php');
+  
 ?>
 <div class="container-fluid">
   <?php
@@ -23,7 +24,7 @@
           <div class="table-responsive">
             <table class="table" id="complaints-table">
               <thead class="text-primary text-center">
-                <th>ID</th><th>Subject</th><th>Description</th><th>Date</th><th>Status</th><?php if ( $_SESSION['userType'] != 'User' ) {echo"<th>Action</th>";}?>
+                <th>ID</th><th>Subject</th><th>Description</th><th>Date</th><th>Status</th><th>Comments</th><?php if ( $_SESSION['userType'] != 'User' ) {echo"<th>Action</th>";}?>
               </thead>
               <tbody>
               <?php
@@ -39,7 +40,13 @@
                       echo "<tr class=\"text-center\">";
                       echo "<td class=\"d-none\">".$row['id']."</td>";
                       echo "<td>".$id."</td><td>".$row['subject']."</td><td>".$row['description']."</td><td>".$row['created_at']."</td><td class=\"text-primary font-weight-bold\">".$row['status']."</td>";
-
+                      echo "<td>";
+echo "<div class='comments-section'>";
+echo "<textarea class='form-control new-comment' rows='2' placeholder='Add a comment...'></textarea>";
+echo "<button class='btn btn-sm btn-primary add-comment-btn' data-complaint-id='".$row['id']."'>Comment</button>";
+echo "<div class='existing-comments' data-complaint-id='".$row['id']."'></div>";
+echo "</div>";
+echo "</td>";
                       if ( $_SESSION['userType'] != 'User' )
                       {
                         if ( $row['status'] == 'Pending' )
@@ -52,6 +59,7 @@
                           echo "<td>No Action</td>";
                       }
                       echo "</tr>";
+                      
                     }
                   }
                   else
@@ -172,4 +180,61 @@
       });
     }, {passive:false});
   });
+
+ // Load existing comments when the page loads
+$(document).ready(function() {
+    loadComments();
+});
+
+function loadComments() {
+    $('.existing-comments').each(function() {
+        var complaintId = $(this).data('complaint-id');
+        var commentsDiv = $(this);
+
+        // Fetch existing comments
+        $.ajax({
+            type: "POST",
+            url: "./getComments.php",
+            data: {complaint_id: complaintId},
+            dataType: "json",
+            success: function(data) {
+                var commentsHtml = '';
+                data.forEach(function(comment) {
+                    commentsHtml += '<p><strong>' + comment.username + ':</strong> ' + comment.comment + ' (' + comment.created_at + ')</p>';
+                });
+                commentsDiv.html(commentsHtml);
+            }
+        });
+    });
+}
+
+// Add new comment
+$(document).on('click', '.add-comment-btn', function() {
+    var complaintId = $(this).data('complaint-id');
+    var commentTextarea = $(this).siblings('.new-comment');
+    var comment = commentTextarea.val();
+
+    if (comment.trim() === '') {
+        alert('Please enter a comment.');
+        return;
+    }
+
+    $.ajax({
+        type: "POST",
+        url: "./saveComment.php",
+        data: {complaint_id: complaintId, comment: comment},
+        dataType: "json",
+        success: function(data) {
+            if(data.status === 'success') {
+                loadComments();
+                commentTextarea.val('');
+            } else {
+                alert(data.message);
+            }
+        }
+    });
+});
+
+
+
 </script>

@@ -33,7 +33,7 @@
           <div class="table-responsive">
             <table class="table" id="complaints-table">
               <thead class="text-primary text-center">
-                <th>ID</th><th>Department</th><th>Subject</th><th>Description</th><th>Date</th><th>Status</th>
+                <th>ID</th><th>Department</th><th>Subject</th><th>Description</th>><th>Comments</th<th>Date</th><th>Status</th><th>Comments</th>
               </thead>
               <tbody>
               <?php
@@ -49,6 +49,13 @@
                       echo "<tr class=\"text-center\">";
                       echo "<td class=\"d-none\">".$row['id']."</td>";
                       echo "<td>".$id."</td><td>".$row['dept_id']."</td><td>".$row['subject']."</td><td>".$row['description']."</td><td>".$row['created_at']."</td><td class=\"text-primary font-weight-bold\">".$row['status']."</td>";
+                      echo "<td>";
+                      echo "<div class='comments-section'>";
+                      echo "<textarea class='form-control new-comment' rows='2' placeholder='Add a comment...'></textarea>";
+                      echo "<button class='btn btn-sm btn-primary add-comment-btn' data-complaint-id='".$row['id']."'>Comment</button>";
+                      echo "<div class='existing-comments' data-complaint-id='".$row['id']."'></div>";
+                      echo "</div>";
+                      echo "</td>";
                       echo "</tr>";
                     }
                   }
