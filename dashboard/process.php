@@ -33,7 +33,7 @@
           <div class="table-responsive">
             <table class="table" id="complaints-table">
               <thead class="text-primary text-center">
-                <th>ID</th><th>Department</th><th>Subject</th><th>Description</th>><th>Comments</th<th>Date</th><th>Status</th><th>Comments</th>
+                <th>ID</th><th>Department</th><th>Subject</th><th>Description</th>><th>Date</th><th>Status</th><th>Comments</th>
               </thead>
               <tbody>
               <?php
@@ -51,9 +51,9 @@
                       echo "<td>".$id."</td><td>".$row['dept_id']."</td><td>".$row['subject']."</td><td>".$row['description']."</td><td>".$row['created_at']."</td><td class=\"text-primary font-weight-bold\">".$row['status']."</td>";
                       echo "<td>";
                       echo "<div class='comments-section'>";
+                      echo "<div class='existing-comments' data-complaint-id='".$row['id']."'></div>";
                       echo "<textarea class='form-control new-comment' rows='2' placeholder='Add a comment...'></textarea>";
                       echo "<button class='btn btn-sm btn-primary add-comment-btn' data-complaint-id='".$row['id']."'>Comment</button>";
-                      echo "<div class='existing-comments' data-complaint-id='".$row['id']."'></div>";
                       echo "</div>";
                       echo "</td>";
                       echo "</tr>";
@@ -166,8 +166,42 @@
 
 <script>
   // Toggle Department Select Menu
-  $(document).ready(function(){
-    
+  
+
+// Add new comment
+$(document).off('click', '.add-comment-btn').on('click', '.add-comment-btn', function() {
+    var complaintId = $(this).data('complaint-id');
+    var commentTextarea = $(this).siblings('.new-comment');
+    var comment = commentTextarea.val();
+    var uid = <?php echo json_encode($_SESSION['userId']); ?>;
+    if (comment.trim() === '') {
+        md.showNotification('top', 'right', 'warning', 'Please Enter a Comment!');
+        return;
+    }
+
+    $.ajax({
+        type: "POST",
+        url: "./saveComment.php",
+        data: {complaint_id: complaintId, user_id: uid, comment: comment},
+        dataType: "json",
+        success: function(data) {
+            if(data.status === 'success') {
+                loadComments();
+                commentTextarea.val('');
+                md.showNotification('top', 'right', 'success', data.message);
+            } else {
+                md.showNotification('top', 'right', 'danger', 'Something went Wrong, Error:'+data.message);
+            }
+        },
+        error: function(xhr, status, error) {
+                console.error("Error fetching comments:", xhr.responseText);
+            } 
+    });
+});
+
+$(document).ready(function(){
+    // Load existing comments when the page loads
+    loadComments();
     // Create Complaint form Request
     $('#createComplaint-form button[type="submit"]').click(function(e){
       e.preventDefault();
@@ -218,7 +252,7 @@
       });
     });
 
-    // Action Buttons Request
+/*     // Action Buttons Request
     $('#complaints-table button').click(function(e){
       e.preventDefault();
 
@@ -256,8 +290,35 @@
             setTimeout(function(){location.reload();},4000);
           }
         },
-        error: function(){md.showNotification('top', 'right', 'danger', 'Something went Wrong! Try Again');}
+        error: function(){md.showNotification('top', 'right', 'success', 'Something went Wrong! Try Again');}
       });
+    }); */
+});
+
+function loadComments() {
+    $('.existing-comments').each(function() {
+        var complaintId = $(this).data('complaint-id');
+        var commentsDiv = $(this);
+        // Fetch existing comments
+        $.ajax({
+            type: "POST",
+            url: "./getComments.php",
+            data: {complaint_id: complaintId},
+            dataType: "json",
+            success: function(data) {
+                var commentsHtml = '';
+                data.forEach(function(comment) {
+                    commentsHtml += '<p><strong>' + comment.name + ':</strong> ' + comment.comment + ' (' + comment.created_at + ')</p>';
+                });
+                commentsDiv.html(commentsHtml);
+            },
+            error: function(xhr, status, error) {
+                console.error("Error fetching comments:", xhr.responseText);
+            }  
+          });
     });
-  });
+}
+
+
+
 </script>
