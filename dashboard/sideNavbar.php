@@ -1,4 +1,6 @@
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<?php
+  include_once('./scripts.php');
+?>
 <style>
     /* Hide the sub-items by default */
     .nav-sub-items {
