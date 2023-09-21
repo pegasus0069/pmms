@@ -165,7 +165,8 @@
                 <label for="Role" class="bmd-label-floating">Department</label>
                 <select class="form-control" name="complaintDepartment" required>
                 <?php
-                    $sql = "SELECT * FROM departments";
+                    /* $sql = "SELECT * FROM departments"; */
+                    $sql = "SELECT * FROM departments WHERE code IN ('CITS', 'P&P', 'O&M', 'FAC')";
                     $result = mysqli_query($conn, $sql);
 
                     if (mysqli_num_rows($result) > 0)
@@ -210,7 +211,7 @@
               <div class="form-group">
                 <label for="description">Description</label>
                 <textarea class="form-control" name="complaintBody" aria-describedby="descriptionHelp" rows="3" required></textarea>
-                <small id="descriptionHelp" class="form-text text-muted">Max. word limit - 250</small>
+                <small id="descriptionHelp" class="form-text text-muted">Max. character limit - 3000</small>
               </div>
             </div>
           </div>
@@ -316,7 +317,7 @@
             }
 
             md.showNotification('top', 'right', setAlertColor, 'Complaint status updated to '+action);
-            setTimeout(function(){location.reload();},4000);
+            setTimeout(function(){location.reload();},3000);
           }
         },
         error: function(){md.showNotification('top', 'right', 'danger', 'Something went Wrong! Try Again');}

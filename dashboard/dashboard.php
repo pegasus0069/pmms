@@ -47,7 +47,7 @@
                         <div class="card card-stats">
                             <div class="card-header card-header-info card-header-icon">
                                 <div class="card-icon"><a href="#process"><i class="material-icons">thumb_up_alt</i></a></div>
-                                <p class="card-category">Approved</p>
+                                <p class="card-category">Completed</p>
                                 <?php
                                     $sql = "SELECT complaints.created_at FROM `complaints` JOIN `users` ON complaints.dept_id=users.dept_id WHERE users.id='".$_SESSION['userId']."' AND complaints.status='Approved' ORDER BY complaints.created_at DESC";
                                     $result = mysqli_query($conn, $sql);

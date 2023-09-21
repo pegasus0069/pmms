@@ -33,7 +33,7 @@
           <div class="table-responsive">
             <table class="table" id="complaints-table">
               <thead class="text-primary text-center">
-                <th>ID</th><th>Department</th><th>Subject</th><th>Description</th>><th>Date</th><th>Status</th><th>Comments</th>
+                <th>ID</th><th>Department</th><th>Subject</th><th>Description</th><th>Date</th><th>Status</th><th>Comments</th><th>Action</th>
               </thead>
               <tbody>
               <?php
@@ -56,6 +56,18 @@
                       echo "<button class='btn btn-sm btn-primary add-comment-btn' data-complaint-id='".$row['id']."'>Comment</button>";
                       echo "</div>";
                       echo "</td>";
+                      if ( $_SESSION['userType'] == 'User' || $_SESSION['userType'] == 'Resolver')
+                      {
+                        if ( $row['status'] == 'Resolved' )
+                          echo "<td><button class=\"btn btn-info btn-round btn-fab\" id=\"Approved\"><i class=\"material-icons\" data-toggle=\"tooltip\" data-html=\"true\" title=\"Approve\">thumb_up_alt</i></button><button class=\"btn btn-danger btn-round btn-fab\" id=\"Rejected\"><i class=\"material-icons\" data-toggle=\"tooltip\" data-html=\"true\" title=\"Reject\">thumb_down_alt</i></button></td>";
+                        else if ( $row['status'] == 'Approved')
+                          echo "<td>Completed</td>";
+                          /* echo "<td><button class=\"btn btn-success btn-round btn-fab\" id=\"Completed\"><i class=\"material-icons\" data-toggle=\"tooltip\" data-html=\"true\" title=\"Completed\">build</i></button></td>"; */
+                        else if ( $row['status'] == 'Rejected' )
+                          echo "<td>No Action</td>";
+                        else
+                          echo "<td>No Action</td>";
+                      }
                       echo "</tr>";
                     }
                   }
@@ -102,7 +114,8 @@
                 <label for="Role" class="bmd-label-floating">Department</label>
                 <select class="form-control" name="complaintDepartment" required>
                 <?php
-                    $sql = "SELECT * FROM departments";
+                    /* $sql = "SELECT * FROM departments"; */
+                    $sql = "SELECT * FROM departments WHERE code IN ('CITS', 'P&P', 'O&M', 'FAC')";
                     $result = mysqli_query($conn, $sql);
 
                     if (mysqli_num_rows($result) > 0)
@@ -147,7 +160,7 @@
               <div class="form-group">
                 <label for="description">Description</label>
                 <textarea class="form-control" name="complaintBody" aria-describedby="descriptionHelp" rows="3" required></textarea>
-                <small id="descriptionHelp" class="form-text text-muted">Max. word limit - 250</small>
+                <small id="descriptionHelp" class="form-text text-muted">Max. character limit - 3000</small>
               </div>
             </div>
           </div>
@@ -252,7 +265,7 @@ $(document).ready(function(){
       });
     });
 
-/*     // Action Buttons Request
+     // Action Buttons Request
     $('#complaints-table button').click(function(e){
       e.preventDefault();
 
@@ -287,12 +300,12 @@ $(document).ready(function(){
             }
 
             md.showNotification('top', 'right', setAlertColor, 'Complaint status updated to '+action);
-            setTimeout(function(){location.reload();},4000);
+            setTimeout(function(){location.reload();},3000);
           }
-        },
-        error: function(){md.showNotification('top', 'right', 'success', 'Something went Wrong! Try Again');}
+        }/* ,
+        error: function(){md.showNotification('top', 'right', 'success', 'Something went Wrong! Try Again');} */
       });
-    }); */
+    });
 });
 
 function loadComments() {

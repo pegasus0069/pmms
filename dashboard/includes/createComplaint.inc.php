@@ -15,13 +15,13 @@ if($_POST)
     $department  = $_POST['complaintDepartment'];
     
     // Initial Validation and Error Handling
-    if( strlen($subject) < 8 || strlen($subject) > 100 )
+    if( strlen($subject) < 8 || strlen($subject) > 250 )
     {
         $error_log['complaintSubject'] = 'Invalid Subject!';
     }
-    if( strlen($description) < 10 || strlen($description) > 255 )
+    if( strlen($description) < 10 || strlen($description) > 5000 )
     {
-        $error_log['complaintBody'] = 'Must be 10 to 255 characters!';
+        $error_log['complaintBody'] = 'Must be 10 to 5000 characters!';
     }
     // Initial Validation End
 
