@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 11, 2023 at 10:11 AM
+-- Generation Time: Nov 09, 2023 at 11:52 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -46,6 +46,45 @@ INSERT INTO `announcements` (`id`, `title`, `body`, `owner_id`, `created_at`) VA
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `comments`
+--
+
+CREATE TABLE `comments` (
+  `id` int(11) NOT NULL,
+  `complaint_id` int(11) NOT NULL,
+  `user_id` bigint(20) UNSIGNED NOT NULL,
+  `comment` text NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `comments`
+--
+
+INSERT INTO `comments` (`id`, `complaint_id`, `user_id`, `comment`, `created_at`) VALUES
+(1, 1, 5, 'Hello', '2023-09-12 02:51:13'),
+(55, 8, 7, 'The problem is solved!', '2023-09-21 01:49:42'),
+(56, 11, 7, 'Helo', '2023-09-21 02:26:32'),
+(57, 12, 4, 'hello', '2023-09-21 02:37:28'),
+(58, 12, 7, 'Hi', '2023-09-21 02:43:02'),
+(59, 13, 7, 'Hello', '2023-09-21 02:50:05'),
+(60, 13, 8, 'Hello!', '2023-09-21 02:53:48'),
+(61, 13, 8, 'The routers will be purchased soon!', '2023-09-21 02:54:50'),
+(62, 13, 8, 'The procurement is done!', '2023-09-21 02:55:14'),
+(63, 13, 7, 'hello', '2023-09-21 02:59:06'),
+(64, 13, 7, 'The products doesnt matches the specification provide earlier.', '2023-09-21 02:59:22'),
+(65, 13, 7, 'The products doesn&#039;t matches the specification provide earlier.', '2023-09-21 03:05:05'),
+(66, 13, 8, 'The changes are made according to your requirements!', '2023-09-21 03:12:51'),
+(67, 14, 4, 'Please find the procurement details.', '2023-09-21 03:24:41'),
+(68, 14, 8, 'Procurement request received.', '2023-09-21 03:25:36'),
+(69, 14, 8, 'The procurement is completed please check the specifications of the computers.', '2023-09-21 03:26:16'),
+(70, 16, 7, 'please take necessary actions. ', '2023-09-21 14:16:34'),
+(71, 16, 8, 'We have taken necessary measures. ', '2023-09-21 14:17:44'),
+(72, 14, 4, 'Hello', '2023-09-27 06:11:19');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `complaints`
 --
 
@@ -55,7 +94,7 @@ CREATE TABLE `complaints` (
   `description` varchar(255) NOT NULL,
   `dept_id` varchar(6) NOT NULL,
   `user_id` bigint(20) UNSIGNED NOT NULL,
-  `status` enum('Pending','Approved','Rejected','Resolved') NOT NULL DEFAULT 'Pending',
+  `status` enum('Pending','Approved','Unresolved','Resolved','Completed') NOT NULL DEFAULT 'Pending',
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -64,14 +103,20 @@ CREATE TABLE `complaints` (
 --
 
 INSERT INTO `complaints` (`id`, `subject`, `description`, `dept_id`, `user_id`, `status`, `created_at`) VALUES
-(1, 'Separate Complaints Sections', 'I think Separate Complaints Sections can be added', 'WEB', 2, 'Approved', '2020-04-28 06:43:41'),
-(2, 'New CBSE Policy', 'I think new CBSE Policy can be implemented in School.', 'ACAD', 2, 'Pending', '2020-04-28 06:44:33'),
+(1, 'Separate Complaints Sections', 'I think Separate Complaints Sections can be added', 'WEB', 2, 'Resolved', '2020-04-28 06:43:41'),
 (3, 'Bug in Website', 'Hey,\r\nThere\'s a bug in your website in complaints Section.\r\nThanks', 'WEB', 3, 'Resolved', '2020-04-28 06:47:33'),
-(4, 'IRAS not working', 'Iras is not accepting any requests!', 'WEB', 4, 'Resolved', '2023-09-09 22:12:06'),
-(5, 'Course List Not Fixed Yet', 'Please fix the course list as soon as possible', 'CSE', 4, 'Resolved', '2023-09-09 22:26:33'),
+(4, 'IRAS not working', 'Iras is not accepting any requests!', 'WEB', 4, 'Approved', '2023-09-09 22:12:06'),
+(5, 'Course List Not Fixed Yet', 'Please fix the course list as soon as possible', 'CSE', 4, 'Approved', '2023-09-09 22:26:33'),
 (6, 'Test Subject', 'Test TEST TESTE', 'CSE', 4, 'Approved', '2023-09-09 22:30:11'),
-(7, 'Test Subject', 'This is a test description', 'CSE', 4, 'Resolved', '2023-09-10 00:08:56'),
-(8, 'Hello World', 'This is a test', 'CITS', 5, 'Pending', '2023-09-10 01:06:50');
+(7, 'Test Subject', 'This is a test description', 'CSE', 4, 'Approved', '2023-09-10 00:08:56'),
+(8, 'Hello World', 'This is a test', 'CITS', 5, 'Resolved', '2023-09-10 01:06:50'),
+(9, 'Admin Test', 'Admin Test ', 'WEB', 5, 'Approved', '2023-09-11 23:49:21'),
+(11, 'Test Run', 'Heloo This is a Test!', 'CITS', 4, 'Approved', '2023-09-21 02:25:53'),
+(12, 'Hello Test', 'This is another test job!', 'CITS', 4, 'Approved', '2023-09-21 02:35:30'),
+(13, 'Router RFQ', 'Please buy the following routers!', 'P&P', 7, 'Approved', '2023-09-21 02:49:50'),
+(14, 'CSCLAB4 Computer RFQ', 'Please procure 10 units of high configuration Desktop Computers.', 'P&P', 4, 'Approved', '2023-09-21 03:24:08'),
+(15, 'Hello test', 'Testing going', 'CITS', 7, 'Pending', '2023-09-21 09:52:54'),
+(16, 'AC needs to be purchansed', 'need 2 ton ac in the data center', 'P&P', 7, 'Unresolved', '2023-09-21 14:16:05');
 
 -- --------------------------------------------------------
 
@@ -92,7 +137,6 @@ CREATE TABLE `departments` (
 
 INSERT INTO `departments` (`id`, `name`, `code`, `created_at`) VALUES
 (1, 'Web Portal', 'WEB', '2020-04-28 05:29:11'),
-(2, 'Academics', 'ACAD', '2020-04-28 06:01:16'),
 (3, 'Central Information Technology Services', 'CITS', '2023-09-09 22:15:26'),
 (4, 'Finance and Accounts Department', 'F&A', '2023-09-09 22:16:24'),
 (5, 'Purchase and Procurement Department', 'P&P', '2023-09-09 22:17:41'),
@@ -142,11 +186,12 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `name`, `phone`, `email`, `email_verified_at`, `role`, `dept_id`, `password`, `profile_picture`, `remember_token`, `created_at`, `updated_at`) VALUES
 (1, 'Admin', '7415555536', 'admin@demo.com', NULL, 'Admin', 'WEB', '$2y$10$7lVTZZPvtaKWJzhORD7lvOK.GQztZhckOnNFAdgM.1trYm2U3nhpa', 'arnoy.png', NULL, '2020-04-28 05:47:28', '2023-09-09 22:23:00'),
-(2, 'User', '1234567890', 'user@demo.com', NULL, 'user', NULL, '$2y$10$tg7vvxjaQSWwXr6OE4ESa.fKfFrzF/8o8rkXSE2dBxqQs0EScGc4K', 'profileDefault.png', NULL, '2020-04-28 06:11:22', NULL),
-(3, 'Caretaker', '4294967295', 'caretaker@demo.com', NULL, 'Resolver', 'ACAD', '$2y$10$FN8Rm9IBiL69.qApSKXKqOHAhN1VVGn5li/s6EOcrbQgnNC3kyIyS', 'profileDefault.png', NULL, '2020-04-28 06:40:01', NULL),
-(4, 'Noor-E-Sadman', '01717916061', 'arnoyk123@gmail.com', NULL, 'User', NULL, '$2y$10$MnT6i16iVMNiBQeMFaeA1eJevZyk7gvX3X52BA1c51/zi9vrIz7be', 'arnoy.jpg', NULL, '2023-09-09 22:10:13', '2023-09-10 00:19:18'),
+(2, 'User', '1234567890', 'user@demo.com', NULL, 'User', NULL, '$2y$10$tg7vvxjaQSWwXr6OE4ESa.fKfFrzF/8o8rkXSE2dBxqQs0EScGc4K', 'profileDefault.png', NULL, '2020-04-28 06:11:22', NULL),
+(3, 'Caretaker', '4294967295', 'caretaker@demo.com', NULL, 'Resolver', NULL, '$2y$10$FN8Rm9IBiL69.qApSKXKqOHAhN1VVGn5li/s6EOcrbQgnNC3kyIyS', 'profileDefault.png', NULL, '2020-04-28 06:40:01', NULL),
+(4, 'Noor-E-Sadman', '01717916061', 'arnoyk123@gmail.com', NULL, 'User', 'F&A', '$2y$10$MnT6i16iVMNiBQeMFaeA1eJevZyk7gvX3X52BA1c51/zi9vrIz7be', 'arnoy.jpg', NULL, '2023-09-09 22:10:13', '2023-09-10 00:19:18'),
 (5, 'Mahady Hasan', '1717916061', 'mahady@iub.edu.bd', NULL, 'Resolver', 'CSE', '$2y$10$a5CpTfFiPFAuprVVCQT4VeJdRdHTkfGlM9SUQpRsWQ8r7V8hVLGvO', 'mahady.jpeg', NULL, '2023-09-09 22:22:06', '2023-09-09 23:40:38'),
-(7, 'CITS Admin', '1717916061', 'cits@iub.edu.bd', NULL, 'Resolver', 'CITS', '$2y$10$nfFBE6ThiS.K4okrpANi5eP14SL4nwDl0MYOw9LPHo7mO0lalZ9m6', 'profileDefault.png', NULL, '2023-09-10 01:08:09', NULL);
+(7, 'CITS Admin', '1717916061', 'cits@iub.edu.bd', NULL, 'Resolver', 'CITS', '$2y$10$nfFBE6ThiS.K4okrpANi5eP14SL4nwDl0MYOw9LPHo7mO0lalZ9m6', 'profileDefault.png', NULL, '2023-09-10 01:08:09', NULL),
+(8, 'Purchase Admin', '1717916062', 'purchase@iub.edu.bd', NULL, 'Resolver', 'P&P', '$2y$10$CIU2WIKtKe9SywuOLIDIPuncAtd5BXyzYNQkQynn4zEEvlBivYP7O', 'profileDefault.png', NULL, '2023-09-21 02:52:35', NULL);
 
 --
 -- Indexes for dumped tables
@@ -158,6 +203,13 @@ INSERT INTO `users` (`id`, `name`, `phone`, `email`, `email_verified_at`, `role`
 ALTER TABLE `announcements`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fkey_announcements_owner_id` (`owner_id`);
+
+--
+-- Indexes for table `comments`
+--
+ALTER TABLE `comments`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `Commentuid` (`user_id`);
 
 --
 -- Indexes for table `complaints`
@@ -200,10 +252,16 @@ ALTER TABLE `announcements`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
+-- AUTO_INCREMENT for table `comments`
+--
+ALTER TABLE `comments`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
+
+--
 -- AUTO_INCREMENT for table `complaints`
 --
 ALTER TABLE `complaints`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `departments`
@@ -221,7 +279,7 @@ ALTER TABLE `password_resets`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- Constraints for dumped tables
@@ -232,6 +290,12 @@ ALTER TABLE `users`
 --
 ALTER TABLE `announcements`
   ADD CONSTRAINT `fkey_announcements_owner_id` FOREIGN KEY (`owner_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `comments`
+--
+ALTER TABLE `comments`
+  ADD CONSTRAINT `Commentuid` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 
 --
 -- Constraints for table `complaints`

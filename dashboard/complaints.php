@@ -43,10 +43,10 @@
                       if ( $_SESSION['userType'] != 'User' )
                       {
                         if ( $row['status'] == 'Pending' )
-                          echo "<td><button class=\"btn btn-info btn-round btn-fab\" id=\"Approved\"><i class=\"material-icons\" data-toggle=\"tooltip\" data-html=\"true\" title=\"Approve\">thumb_up_alt</i></button><button class=\"btn btn-danger btn-round btn-fab\" id=\"Rejected\"><i class=\"material-icons\" data-toggle=\"tooltip\" data-html=\"true\" title=\"Reject\">thumb_down_alt</i></button></td>";
+                          echo "<td><button class=\"btn btn-info btn-round btn-fab\" id=\"Approved\"><i class=\"material-icons\" data-toggle=\"tooltip\" data-html=\"true\" title=\"Approve\">thumb_up_alt</i></button><button class=\"btn btn-danger btn-round btn-fab\" id=\"Unresolved\"><i class=\"material-icons\" data-toggle=\"tooltip\" data-html=\"true\" title=\"Reject\">thumb_down_alt</i></button></td>";
                         else if ( $row['status'] == 'Approved')
                           echo "<td><button class=\"btn btn-success btn-round btn-fab\" id=\"Resolved\"><i class=\"material-icons\" data-toggle=\"tooltip\" data-html=\"true\" title=\"Resolved\">build</i></button></td>";
-                        else if ( $row['status'] == 'Rejected' )
+                        else if ( $row['status'] == 'Unresolved' )
                           echo "<td>No Action</td>";
                         else
                           echo "<td>No Action</td>";
@@ -312,7 +312,7 @@
             switch(action)
             {
               case 'Approved': setAlertColor = 'info'; break;
-              case 'Rejected': setAlertColor = 'warning'; break;
+              case 'Unresolved': setAlertColor = 'warning'; break;
               case 'Resolved': setAlertColor = 'success'; break;
             }
 

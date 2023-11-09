@@ -24,22 +24,34 @@
           <div class="table-responsive">
             <table class="table" id="complaints-table">
               <thead class="text-primary text-center">
-                <th>ID</th><th>Subject</th><th>Description</th><th>Date</th><th>Status</th><th>Comments</th><?php if ( $_SESSION['userType'] != 'User' ) {echo"<th>Action</th>";}?>
+                <th>ID</th><th>Department</th><th>Subject</th><th>Description</th><th>Date</th><th>Status</th><th>Comments</th><?php if ( $_SESSION['userType'] != 'User' ) {echo"<th>Action</th>";}?>
               </thead>
               <tbody>
               <?php
-                  $sql = "SELECT complaints.id,complaints.subject,complaints.description,complaints.created_at,complaints.status FROM `complaints` JOIN `users` ON complaints.dept_id=users.dept_id WHERE users.id='".$_SESSION['userId']."'";
+                  $sql = "SELECT complaints.id,complaints.user_id,complaints.subject,complaints.description,complaints.created_at,complaints.status FROM `complaints` JOIN `users` ON complaints.dept_id=users.dept_id WHERE users.id='".$_SESSION['userId']."'";
                   $result = mysqli_query($conn, $sql);
                   $id = 0;
-
+              
                   if (mysqli_num_rows($result) > 0)
                   {
                     while($row = mysqli_fetch_assoc($result))
                     {
+                      // Get user_id and subject from the current complaint
+                      $user_id = $row['user_id'];
+                      $senderDept_id;                
+                      // Query the users table to get the dept_id based on user_id
+                      $userQuery = "SELECT dept_id FROM users WHERE id = '$user_id'";
+                      $userResult = mysqli_query($conn, $userQuery);
+                                      
+                      if (mysqli_num_rows($userResult) > 0)
+                      {
+                          $userRow = mysqli_fetch_assoc($userResult);
+                          $senderDept_id = $userRow['dept_id'];
+                      }
                       $id += 1;
                       echo "<tr class=\"text-center\">";
                       echo "<td class=\"d-none\">".$row['id']."</td>";
-                      echo "<td>".$id."</td><td>".$row['subject']."</td><td>".$row['description']."</td><td>".$row['created_at']."</td><td class=\"text-primary font-weight-bold\">".$row['status']."</td>";
+                      echo "<td>".$id."</td><td>".$senderDept_id."</td><td>".$row['subject']."</td><td>".$row['description']."</td><td>".$row['created_at']."</td><td class=\"text-primary font-weight-bold\">".$row['status']."</td>";
                       echo "<td>";
                       echo "<div class='comments-section'>";
                       echo "<div class='existing-comments' data-complaint-id='".$row['id']."'></div>";
@@ -51,11 +63,11 @@
                       {
                         if ( $row['status'] == 'Pending' )
                           echo "<td><button class=\"btn btn-success btn-round btn-fab\" id=\"Resolved\"><i class=\"material-icons\" data-toggle=\"tooltip\" data-html=\"true\" title=\"Resolved\">build</i></button></td>";
-                        /*   echo "<td><button class=\"btn btn-info btn-round btn-fab\" id=\"Approved\"><i class=\"material-icons\" data-toggle=\"tooltip\" data-html=\"true\" title=\"Approve\">thumb_up_alt</i></button><button class=\"btn btn-danger btn-round btn-fab\" id=\"Rejected\"><i class=\"material-icons\" data-toggle=\"tooltip\" data-html=\"true\" title=\"Reject\">thumb_down_alt</i></button></td>"; */
+                        /*   echo "<td><button class=\"btn btn-info btn-round btn-fab\" id=\"Approved\"><i class=\"material-icons\" data-toggle=\"tooltip\" data-html=\"true\" title=\"Approve\">thumb_up_alt</i></button><button class=\"btn btn-danger btn-round btn-fab\" id=\"Unresolved\"><i class=\"material-icons\" data-toggle=\"tooltip\" data-html=\"true\" title=\"Reject\">thumb_down_alt</i></button></td>"; */
                         else if ( $row['status'] == 'Approved')
                           echo "<td>Completed</td>";  
                           /* echo "<td><button class=\"btn btn-success btn-round btn-fab\" id=\"Resolved\"><i class=\"material-icons\" data-toggle=\"tooltip\" data-html=\"true\" title=\"Resolved\">build</i></button></td>"; */
-                        else if ( $row['status'] == 'Rejected' )
+                        else if ( $row['status'] == 'Unresolved' )
                           echo "<td><button class=\"btn btn-success btn-round btn-fab\" id=\"Resolved\"><i class=\"material-icons\" data-toggle=\"tooltip\" data-html=\"true\" title=\"Resolved\">build</i></button></td>";
                           /* echo "<td>No Action</td>"; */
                         else
@@ -204,7 +216,7 @@ $(document).off('click', '.add-comment-btn').on('click', '.add-comment-btn', fun
             switch(action)
             {
               case 'Approved': setAlertColor = 'info'; break;
-              case 'Rejected': setAlertColor = 'warning'; break;
+              case 'Unresolved': setAlertColor = 'warning'; break;
               case 'Resolved': setAlertColor = 'success'; break;
               case 'Completed': setAlertColor = 'success'; break;              
             }
