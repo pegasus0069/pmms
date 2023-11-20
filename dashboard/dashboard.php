@@ -263,7 +263,7 @@
                             if ( ($rowCount = mysqli_num_rows($result)) > 0 )
                             {
                                 $row = mysqli_fetch_row($result);
-                                $lastRecord = "Last Department on ".$row[0];
+                                $lastRecord = "Last Created on ".$row[0];
                             }
                             // Free result set
                             mysqli_free_result($result);
@@ -316,7 +316,7 @@
                             if ( ($rowCount = mysqli_num_rows($result)) > 0 )
                             {
                                 $row = mysqli_fetch_row($result);
-                                $lastRecord = "Last Department on ".$row[0];
+                                $lastRecord = "Last Created on ".$row[0];
                             }
                             // Free result set
                             mysqli_free_result($result);
@@ -355,5 +355,59 @@
                 </div>
             </div>
         </div>
+
+        <div class="col-lg-7 col-md-12">
+            <div class="card">
+                <div class="card-header card-header-primary">
+                    <h4 class="card-title">Service List</h4>
+                    <p class="card-category">
+                        <?php
+                            $sql    = "SELECT `created_at` FROM `services` ORDER BY `id` DESC LIMIT 1";
+                            $result = mysqli_query($conn, $sql);
+                            $lastRecord = "No Record";
+
+                            if ( ($rowCount = mysqli_num_rows($result)) > 0 )
+                            {
+                                $row = mysqli_fetch_row($result);
+                                $lastRecord = "Last Created on ".$row[0];
+                            }
+                            // Free result set
+                            mysqli_free_result($result);
+                            echo $lastRecord;
+                        ?>
+                    </p>
+                </div>
+                <div class="card-body table-responsive">
+                    <table class="table table-hover">
+                        <thead class="text-warning text-center">
+                            <th>ID</th><th>Service Name</th><th>Description</th><th>Offered By</th>
+                        </thead>
+                        <tbody>
+                            <?php
+                                $sql = "SELECT services.id,services.name,services.description,departments.name AS dept_name FROM services JOIN departments ON services.department_id=departments.id";
+                                $result = mysqli_query($conn, $sql);
+                                $id = 0;
+
+                                if ( mysqli_num_rows($result) > 0 )
+                                {
+                                    while ( $row = mysqli_fetch_assoc($result) )
+                                    {
+                                        $id += 1;
+                                        echo "<tr class=\"text-center\">";
+                                        echo "<td>".$id."</td><td>".$row['name']."</td><td>".$row['description']."</td><td>".$row['dept_name']."</td>";
+                                        echo "</tr>";
+                                    }
+                                }
+                                else
+                                    echo "<tr class=\"text-center\">"."<td>-</td><td>-</td><td>-</td><td>-</td><td>-</td>"."</tr>";
+                                // Free result set
+                                mysqli_free_result($result);
+                            ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
     </div>
 </div>

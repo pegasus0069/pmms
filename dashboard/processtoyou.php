@@ -24,11 +24,11 @@
           <div class="table-responsive">
             <table class="table" id="complaints-table">
               <thead class="text-primary text-center">
-                <th>ID</th><th>Department</th><th>Subject</th><th>Description</th><th>Date</th><th>Status</th><th>Comments</th><?php if ( $_SESSION['userType'] != 'User' ) {echo"<th>Action</th>";}?>
+                <th>ID</th><th>Department</th><th>Service Name</th><th>Subject</th><th>Description</th><th>Date</th><th>Status</th><th>Comments</th><?php if ( $_SESSION['userType'] != 'User' ) {echo"<th>Action</th>";}?>
               </thead>
               <tbody>
               <?php
-                  $sql = "SELECT complaints.id,complaints.user_id,complaints.subject,complaints.description,complaints.created_at,complaints.status FROM `complaints` JOIN `users` ON complaints.dept_id=users.dept_id WHERE users.id='".$_SESSION['userId']."'";
+                  $sql = "SELECT complaints.id,complaints.user_id,complaints.service_name,complaints.subject,complaints.description,complaints.created_at,complaints.status FROM `complaints` JOIN `users` ON complaints.dept_id=users.dept_id WHERE users.id='".$_SESSION['userId']."' ORDER BY complaints.id DESC";
                   $result = mysqli_query($conn, $sql);
                   $id = 0;
               
@@ -51,7 +51,7 @@
                       $id += 1;
                       echo "<tr class=\"text-center\">";
                       echo "<td class=\"d-none\">".$row['id']."</td>";
-                      echo "<td>".$id."</td><td>".$senderDept_id."</td><td>".$row['subject']."</td><td>".$row['description']."</td><td>".$row['created_at']."</td><td class=\"text-primary font-weight-bold\">".$row['status']."</td>";
+                      echo "<td>".$id."</td><td>".$senderDept_id."</td><td>".$row['service_name']."</td><td>".$row['subject']."</td><td>".$row['description']."</td><td>".$row['created_at']."</td><td class=\"text-primary font-weight-bold\">".$row['status']."</td>";
                       echo "<td>";
                       echo "<div class='comments-section'>";
                       echo "<div class='existing-comments' data-complaint-id='".$row['id']."'></div>";
