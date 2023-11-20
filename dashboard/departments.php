@@ -202,7 +202,7 @@
           {
             // alert('success');
             md.showNotification('top', 'right', 'warning', 'Department deleted successfully');
-            setTimeout(function(){location.reload();},4000);
+            setTimeout(function(){location.reload();},3000);
           }
         },
         error: function(data){md.showNotification('top', 'right', 'danger', 'Something went Wrong! Try Again');}

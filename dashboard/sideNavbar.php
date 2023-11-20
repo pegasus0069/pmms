@@ -103,6 +103,12 @@
                 </a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" href="#services">
+                    <i class="material-icons">list</i>
+                    <p>Services</p>
+                </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link">
                     <i class="material-icons">description</i>
                     <p>Tickets</p> 

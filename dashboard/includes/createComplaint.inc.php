@@ -13,15 +13,16 @@ if($_POST)
     $subject     = $_POST['complaintSubject'];
     $description = $_POST['complaintBody'];
     $department  = $_POST['complaintDepartment'];
+    $serviceName = $_POST['serviceName'];
     
     // Initial Validation and Error Handling
-    if( strlen($subject) < 8 || strlen($subject) > 100 )
+    if( strlen($subject) < 8 || strlen($subject) > 250 )
     {
         $error_log['complaintSubject'] = 'Invalid Subject!';
     }
-    if( strlen($description) < 10 || strlen($description) > 255 )
+    if( strlen($description) < 10 || strlen($description) > 5000 )
     {
-        $error_log['complaintBody'] = 'Must be 10 to 255 characters!';
+        $error_log['complaintBody'] = 'Must be 10 to 5000 characters!';
     }
     // Initial Validation End
 
@@ -31,7 +32,7 @@ if($_POST)
         require_once('../../config/db.php');
         
         // if not then insert user details to the table
-        $sql = "INSERT INTO complaints (subject, description, dept_id, user_id, created_at) VALUES (?,?,?,?,NOW())";
+        $sql = "INSERT INTO complaints (service_name, subject, description, dept_id, user_id, created_at) VALUES (?,?,?,?,?,NOW())";
 
         $stmt = mysqli_stmt_init($conn);
 
@@ -42,7 +43,7 @@ if($_POST)
         }
         else
         {
-            mysqli_stmt_bind_param($stmt, "ssss", $subject, $description, $department, $_SESSION['userId']);
+            mysqli_stmt_bind_param($stmt, "sssss", $serviceName, $subject, $description, $department, $_SESSION['userId']);
             mysqli_stmt_execute($stmt);
 
             $response['status'] = 'success';

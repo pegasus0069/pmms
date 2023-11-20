@@ -43,10 +43,10 @@
                       if ( $_SESSION['userType'] != 'User' )
                       {
                         if ( $row['status'] == 'Pending' )
-                          echo "<td><button class=\"btn btn-info btn-round btn-fab\" id=\"Approved\"><i class=\"material-icons\" data-toggle=\"tooltip\" data-html=\"true\" title=\"Approve\">thumb_up_alt</i></button><button class=\"btn btn-danger btn-round btn-fab\" id=\"Rejected\"><i class=\"material-icons\" data-toggle=\"tooltip\" data-html=\"true\" title=\"Reject\">thumb_down_alt</i></button></td>";
+                          echo "<td><button class=\"btn btn-info btn-round btn-fab\" id=\"Approved\"><i class=\"material-icons\" data-toggle=\"tooltip\" data-html=\"true\" title=\"Approve\">thumb_up_alt</i></button><button class=\"btn btn-danger btn-round btn-fab\" id=\"Unresolved\"><i class=\"material-icons\" data-toggle=\"tooltip\" data-html=\"true\" title=\"Unresolved\">thumb_down_alt</i></button></td>";
                         else if ( $row['status'] == 'Approved')
                           echo "<td><button class=\"btn btn-success btn-round btn-fab\" id=\"Resolved\"><i class=\"material-icons\" data-toggle=\"tooltip\" data-html=\"true\" title=\"Resolved\">build</i></button></td>";
-                        else if ( $row['status'] == 'Rejected' )
+                        else if ( $row['status'] == 'Unresolved' )
                           echo "<td>No Action</td>";
                         else
                           echo "<td>No Action</td>";
@@ -165,7 +165,8 @@
                 <label for="Role" class="bmd-label-floating">Department</label>
                 <select class="form-control" name="complaintDepartment" required>
                 <?php
-                    $sql = "SELECT * FROM departments";
+                    /* $sql = "SELECT * FROM departments"; */
+                    $sql = "SELECT * FROM departments WHERE code IN ('CITS', 'P&P', 'O&M', 'FAC')";
                     $result = mysqli_query($conn, $sql);
 
                     if (mysqli_num_rows($result) > 0)
@@ -210,7 +211,7 @@
               <div class="form-group">
                 <label for="description">Description</label>
                 <textarea class="form-control" name="complaintBody" aria-describedby="descriptionHelp" rows="3" required></textarea>
-                <small id="descriptionHelp" class="form-text text-muted">Max. word limit - 250</small>
+                <small id="descriptionHelp" class="form-text text-muted">Max. character limit - 3000</small>
               </div>
             </div>
           </div>
@@ -311,12 +312,12 @@
             switch(action)
             {
               case 'Approved': setAlertColor = 'info'; break;
-              case 'Rejected': setAlertColor = 'warning'; break;
+              case 'Unresolved': setAlertColor = 'warning'; break;
               case 'Resolved': setAlertColor = 'success'; break;
             }
 
             md.showNotification('top', 'right', setAlertColor, 'Complaint status updated to '+action);
-            setTimeout(function(){location.reload();},4000);
+            setTimeout(function(){location.reload();},3000);
           }
         },
         error: function(){md.showNotification('top', 'right', 'danger', 'Something went Wrong! Try Again');}

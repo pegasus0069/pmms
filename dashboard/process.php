@@ -2,6 +2,32 @@
   session_start();
   include_once('../config/db.php');
 ?>
+  <style>
+/* Scrollbar Styles */
+.existing-comments {
+  max-height: 300px;
+  overflow-y: auto;
+  padding: 5px;
+}
+
+.existing-comments::-webkit-scrollbar {
+  width: 12px;
+}
+
+.existing-comments::-webkit-scrollbar-thumb {
+  background-color: #555; /* Dark color for the thumb */
+  border-radius: 6px;
+}
+
+.existing-comments::-webkit-scrollbar-track {
+  background-color: #333; /* Dark color for the track */
+}
+
+.existing-comments::-webkit-scrollbar-thumb:hover {
+  background-color: #777; /* Lighter color on hover */
+}
+
+  </style>
 <div class="container-fluid">
   <?php
     if ( $_SESSION['userType'] != 'Admin' )
@@ -33,11 +59,11 @@
           <div class="table-responsive">
             <table class="table" id="complaints-table">
               <thead class="text-primary text-center">
-                <th>ID</th><th>Department</th><th>Subject</th><th>Description</th>><th>Date</th><th>Status</th><th>Comments</th>
+                <th>ID</th><th>Department</th><th>Service Name</th><th>Subject</th><th>Description</th><th>Date</th><th>Status</th><th>Comments</th><th>Action</th>
               </thead>
               <tbody>
               <?php
-                  $sql = "SELECT * FROM complaints where user_id='".$_SESSION['userId']."'";
+                  $sql = "SELECT * FROM complaints where user_id='".$_SESSION['userId']."' ORDER BY complaints.id DESC";
                   $result = mysqli_query($conn, $sql);
                   $id = 0;
 
@@ -48,7 +74,7 @@
                       $id += 1;
                       echo "<tr class=\"text-center\">";
                       echo "<td class=\"d-none\">".$row['id']."</td>";
-                      echo "<td>".$id."</td><td>".$row['dept_id']."</td><td>".$row['subject']."</td><td>".$row['description']."</td><td>".$row['created_at']."</td><td class=\"text-primary font-weight-bold\">".$row['status']."</td>";
+                      echo "<td>".$id."</td><td>".$row['dept_id']."</td><td>".$row['service_name']."</td><td>".$row['subject']."</td><td>".$row['description']."</td><td>".$row['created_at']."</td><td class=\"text-primary font-weight-bold\">".$row['status']."</td>";
                       echo "<td>";
                       echo "<div class='comments-section'>";
                       echo "<div class='existing-comments' data-complaint-id='".$row['id']."'></div>";
@@ -56,6 +82,18 @@
                       echo "<button class='btn btn-sm btn-primary add-comment-btn' data-complaint-id='".$row['id']."'>Comment</button>";
                       echo "</div>";
                       echo "</td>";
+                      if ( $_SESSION['userType'] == 'User' || $_SESSION['userType'] == 'Resolver')
+                      {
+                        if ( $row['status'] == 'Resolved' )
+                          echo "<td><button class=\"btn btn-info btn-round btn-fab\" id=\"Approved\"><i class=\"material-icons\" data-toggle=\"tooltip\" data-html=\"true\" title=\"Approve\">thumb_up_alt</i></button><button class=\"btn btn-danger btn-round btn-fab\" id=\"Unresolved\"><i class=\"material-icons\" data-toggle=\"tooltip\" data-html=\"true\" title=\"Unresolved\">thumb_down_alt</i></button></td>";
+                        else if ( $row['status'] == 'Approved')
+                          echo "<td>Completed</td>";
+                          /* echo "<td><button class=\"btn btn-success btn-round btn-fab\" id=\"Completed\"><i class=\"material-icons\" data-toggle=\"tooltip\" data-html=\"true\" title=\"Completed\">build</i></button></td>"; */
+                        else if ( $row['status'] == 'Unresolved' )
+                          echo "<td>No Action</td>";
+                        else
+                          echo "<td>No Action</td>";
+                      }
                       echo "</tr>";
                     }
                   }
@@ -87,7 +125,7 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content card">
       <div class="modal-header card-header-primary">
-        <h5 class="modal-title card-title" id="exampleModalLongTitle">Register New Process</h5>
+        <h5 class="modal-title card-title" id="exampleModalLongTitle">Issue New Ticket</h5>
         <button type="button" class="close card-header-icon" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -95,14 +133,15 @@
       <form id="createComplaint-form" method="post" class="card-body">
         <div class="modal-body">
           
-          <!-- Category -->
+          <!-- Department -->
           <div class="row">
             <div class="col-md-12">
               <div class="form-group">
-                <label for="Role" class="bmd-label-floating">Department</label>
-                <select class="form-control" name="complaintDepartment" required>
+                <label for="departmentDropdown" class="bmd-label-floating">Department</label>
+                <select class="form-control" name="complaintDepartment" id="departmentDropdown" required>
                 <?php
-                    $sql = "SELECT * FROM departments";
+                    /* $sql = "SELECT * FROM departments"; */
+                    $sql = "SELECT * FROM departments WHERE code IN ('CITS', 'P&P', 'O&M', 'FAC')";
                     $result = mysqli_query($conn, $sql);
 
                     if (mysqli_num_rows($result) > 0)
@@ -112,7 +151,7 @@
                       {
                         if($count == 1)
                         {
-                          echo "<option value=".$row['code']." selected>".$row['name']."</option>";
+                          echo "<option value=".$row['code'].">".$row['name']."</option>";
                           $count += 1;
                         }
                         else
@@ -131,6 +170,18 @@
             </div>
           </div>
           
+          <!-- Service Name -->
+          <div class="row">
+              <div class="col-md-12">
+                  <div class="form-group">
+                      <label class="bmd-label-floating" style="font-size:12pt;">Service Name</label>
+                      <select name="serviceName" class="form-control" id="serviceName" required>
+                          <!-- Options will be populated dynamically using AJAX -->
+                      </select>
+                  </div>
+              </div>
+          </div>
+
           <!-- Subject -->
           <div class="row">
             <div class="col-md-12">
@@ -147,7 +198,7 @@
               <div class="form-group">
                 <label for="description">Description</label>
                 <textarea class="form-control" name="complaintBody" aria-describedby="descriptionHelp" rows="3" required></textarea>
-                <small id="descriptionHelp" class="form-text text-muted">Max. word limit - 250</small>
+                <small id="descriptionHelp" class="form-text text-muted">Max. character limit - 3000</small>
               </div>
             </div>
           </div>
@@ -166,7 +217,30 @@
 
 <script>
   // Toggle Department Select Menu
-  
+  // AJAX to populate Service Name dropdown based on the selected department
+// Fetch services based on the selected department
+$('#departmentDropdown').change(function () {
+        var departmentId = $(this).val();
+        $.ajax({
+            type: 'POST',
+            url: 'get_services.php', // Create a PHP file to fetch services based on department
+            data: { departmentId: departmentId },
+            dataType: 'json',
+            success: function (data) {
+                $('#serviceName').empty(); // Clear the dropdown
+                if (data.length > 0) {
+                    $.each(data, function (index, service) {
+                        $('#serviceName').append('<option value="' + service.name + '">' + service.name + '</option>');
+                    });
+                } else {
+                    $('#serviceName').append('<option value="" selected>No services available</option>');
+                }
+            },
+            error: function () {
+                console.log('Error fetching services.');
+            }
+        });
+    });
 
 // Add new comment
 $(document).off('click', '.add-comment-btn').on('click', '.add-comment-btn', function() {
@@ -208,7 +282,7 @@ $(document).ready(function(){
       
       $('#createComplaint-form input').removeClass('is-invalid');
       $('.invalid-feedback').remove();
-      
+      console.log($('#createComplaint-form').serialize());
       $.ajax({
         type : 'POST',
         url  : './includes/createComplaint.inc.php',
@@ -252,7 +326,7 @@ $(document).ready(function(){
       });
     });
 
-/*     // Action Buttons Request
+     // Action Buttons Request
     $('#complaints-table button').click(function(e){
       e.preventDefault();
 
@@ -282,17 +356,17 @@ $(document).ready(function(){
             switch(action)
             {
               case 'Approved': setAlertColor = 'info'; break;
-              case 'Rejected': setAlertColor = 'warning'; break;
+              case 'Unresolved': setAlertColor = 'warning'; break;
               case 'Resolved': setAlertColor = 'success'; break;
             }
 
             md.showNotification('top', 'right', setAlertColor, 'Complaint status updated to '+action);
-            setTimeout(function(){location.reload();},4000);
+            setTimeout(function(){location.reload();},3000);
           }
-        },
-        error: function(){md.showNotification('top', 'right', 'success', 'Something went Wrong! Try Again');}
+        }/* ,
+        error: function(){md.showNotification('top', 'right', 'success', 'Something went Wrong! Try Again');} */
       });
-    }); */
+    });
 });
 
 function loadComments() {
