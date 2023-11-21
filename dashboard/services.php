@@ -18,7 +18,7 @@
     <!-- Table Column -->
     <div class="col-md-12">
       <div class="card">
-        <div class="card-header card-header-primary">
+        <div class="card-header card-header-info">
           <div class="row">
             <div class="col-12 col-xl-9 col-lg-8">
               <h4 class="card-title">Services</h4>
@@ -32,8 +32,8 @@
         <div class="card-body">
           <div class="table-responsive">
             <table class="table" id="services-table">
-              <thead class="text-primary text-center">
-                <th>ID</th><th>Service Name</th><th class="text-left">Service Description</th><th>Issued Dept. ID</th><th>Action</th>
+              <thead class="text-dark text-center">
+                <th>ID</th><th>Service Category</th><th>Service Name</th><th class="text-left">Service Description</th><th>Issued Dept. ID</th><th>Action</th>
               </thead>
               <tbody>
                 <?php
@@ -48,7 +48,7 @@
                       $id += 1;
                       echo "<tr class=\"text-center\">";
                       echo "<td class=\"d-none\">".$row['id']."</td>";
-                      echo "<td>".$row['id']."</td><td>".$row['name']."</td><td class=\"text-left\">".$row['description']."</td><td>".$row['department_id']."</td>";
+                      echo "<td>".$row['id']."</td><td>".$row['category']."</td><td class=\"text-left\">".$row['name']."</td><td class=\"text-left\">".$row['description']."</td><td>".$row['department_id']."</td>";
 
                       echo "<td><button class=\"btn btn-info btn-round btn-fab\" id=\"updateService\" data-toggle=\"modal\" data-target=\"#updateServiceModal\"><i class=\"material-icons\" data-toggle=\"tooltip\" data-html=\"true\" title=\"Edit\">create</i></button><button class=\"btn btn-danger btn-round btn-fab\" id=\"deleteService\"><i class=\"material-icons\" data-toggle=\"tooltip\" data-html=\"true\" title=\"Remove\">delete_forever</i></button></td>";
                       echo "</tr>";
@@ -76,7 +76,7 @@
 <div class="modal fade" id="createServiceModal" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-lg" role="document" >
     <div class="modal-content card">
-      <div class="modal-header card-header-primary">
+      <div class="modal-header card-header-info">
         <h5 class="modal-title card-title" id="exampleModalLongTitle">Add New Service</h5>
         <button type="button" class="close card-header-icon" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
@@ -85,6 +85,16 @@
       <form method="post" class="card-body" id="createService-form">
         <div class="modal-body">
           
+          <!-- Service Category -->
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label class="bmd-label-floating" style="font-size:12pt;">Service Category</label>
+                <input type="text" name="serviceCategory" class="form-control" placeholder="Enter Service Category!" required>
+              </div>
+            </div>
+          </div>
+
           <!-- Service Name -->
           <div class="row">
             <div class="col-md-12">
@@ -148,7 +158,7 @@
 <div class="modal fade" id="updateServiceModal" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
     <div class="modal-content card">
-      <div class="modal-header card-header-primary">
+      <div class="modal-header card-header-info">
         <h5 class="modal-title card-title" id="exampleModalLongTitle">Update Service</h5>
         <button type="button" class="close card-header-icon" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
@@ -159,6 +169,16 @@
           
           <input type="hidden" name="action">
           <input type="hidden" name="serviceNewIdentity">
+
+          <!-- Service Category -->
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label class="bmd-label-floating">Service Category</label>
+                <input type="text" name="serviceNewCategory" class="form-control" required>
+              </div>
+            </div>
+          </div>
 
           <!-- Service Name -->
           <div class="row">
@@ -230,9 +250,11 @@
       
       $('#updateService-form input[name="action"]').val('update');
       $('#updateService-form input[name="serviceNewIdentity"]').val(row[0]);
-      $('#updateService-form input[name="serviceNewName"]').val(row[2]);
-      $('#updateService-form input[name="serviceNewDescription"]').val(row[3]);
-      $('#updateService-form input[name="serviceNewideptid"]').val(row[4]);
+      $('#updateService-form input[name="serviceNewCategory"]').val(row[2]);
+      $('#updateService-form input[name="serviceNewName"]').val(row[3]);
+      $('#updateService-form input[name="serviceNewDescription"]').val(row[4]);
+      $('#updateService-form input[name="serviceNewideptid"]').val(row[5]);
+
     });
 
     // Delete Action Button Request

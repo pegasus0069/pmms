@@ -21,7 +21,7 @@ if (isset($_SESSION['userId']) && isset($_SESSION['userName']))
   
 </head>
 
-<body class="dark-edition">
+<body class="light-edition">
 
   <div class="wrapper">    
     <?php include_once('./sideNavbar.php');?>
@@ -41,7 +41,7 @@ if (isset($_SESSION['userId']) && isset($_SESSION['userName']))
   
   <div class="fixed-plugin">
     <div class="dropdown show-dropdown">
-      <a href="#" data-toggle="dropdown">
+      <a style="color:#E1DFE0;" href="#" data-toggle="dropdown">
         <i class="material-icons py-3">settings</i>
       </a>
       <ul class="dropdown-menu">
@@ -49,8 +49,8 @@ if (isset($_SESSION['userId']) && isset($_SESSION['userName']))
         <li class="adjustments-line">
           <a href="javascript:void(0)" class="switch-trigger active-color">
             <div class="badge-colors ml-auto mr-auto">
-              <span class="badge filter badge-purple active" data-color="purple"></span>
-              <span class="badge filter badge-azure" data-color="azure"></span>
+              <span class="badge filter badge-purple" data-color="purple"></span>
+              <span class="badge filter badge-azure active" data-color="azure"></span>
               <span class="badge filter badge-green" data-color="green"></span>
               <span class="badge filter badge-warning" data-color="orange"></span>
               <span class="badge filter badge-danger" data-color="danger"></span>
@@ -59,12 +59,12 @@ if (isset($_SESSION['userId']) && isset($_SESSION['userName']))
           </a>
         </li>
         <li class="header-title">Images</li>
-        <li>
+        <li class="active">
           <a class="img-holder switch-trigger" href="javascript:void(0)">
             <img src="../assets/img/sidebar-1.jpg" alt="">
           </a>
         </li>
-        <li class="active">
+        <li>
           <a class="img-holder switch-trigger" href="javascript:void(0)">
             <img src="../assets/img/sidebar-2.jpg" alt="">
           </a>

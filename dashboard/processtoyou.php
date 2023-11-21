@@ -3,6 +3,32 @@
   include_once('../config/db.php');
   
 ?>
+<style>
+/* Scrollbar Styles */
+.existing-comments {
+  max-height: 300px;
+  overflow-y: auto;
+  padding: 5px;
+}
+
+.existing-comments::-webkit-scrollbar {
+  width: 12px;
+}
+
+.existing-comments::-webkit-scrollbar-thumb {
+  background-color: #555; /* Dark color for the thumb */
+  border-radius: 6px;
+}
+
+.existing-comments::-webkit-scrollbar-track {
+  background-color: #999; /* Dark color for the track */
+}
+
+.existing-comments::-webkit-scrollbar-thumb:hover {
+  background-color: #777; /* Lighter color on hover */
+}
+
+  </style>
 <div class="container-fluid">
   <?php
     if( $_SESSION['userType'] != 'User' )
@@ -12,7 +38,7 @@
   <div class="row">
     <div class="col-md-12">
       <div class="card">
-        <div class="card-header card-header-primary">
+        <div class="card-header card-header-info">
           <div class="row">
             <div class="col-12 col-xl-9 col-lg-8">
               <h4 class="card-title">Tickets Issued To You</h4>
@@ -23,12 +49,12 @@
         <div class="card-body">
           <div class="table-responsive">
             <table class="table" id="complaints-table">
-              <thead class="text-primary text-center">
-                <th>ID</th><th>Department</th><th>Service Name</th><th>Subject</th><th>Description</th><th>Date</th><th>Status</th><th>Comments</th><?php if ( $_SESSION['userType'] != 'User' ) {echo"<th>Action</th>";}?>
+              <thead class="text-dark text-center">
+                <th>ID</th><th>Department</th><th>Service Category</th><th>Service Name</th><th>Subject</th><th>Description</th><th>Date</th><th>Status</th><th>Comments</th><?php if ( $_SESSION['userType'] != 'User' ) {echo"<th>Action</th>";}?>
               </thead>
               <tbody>
               <?php
-                  $sql = "SELECT complaints.id,complaints.user_id,complaints.service_name,complaints.subject,complaints.description,complaints.created_at,complaints.status FROM `complaints` JOIN `users` ON complaints.dept_id=users.dept_id WHERE users.id='".$_SESSION['userId']."' ORDER BY complaints.id DESC";
+                  $sql = "SELECT complaints.id,complaints.user_id,complaints.service_category,complaints.service_name,complaints.subject,complaints.description,complaints.created_at,complaints.status FROM `complaints` JOIN `users` ON complaints.dept_id=users.dept_id WHERE users.id='".$_SESSION['userId']."' ORDER BY complaints.id DESC";
                   $result = mysqli_query($conn, $sql);
                   $id = 0;
               
@@ -51,12 +77,12 @@
                       $id += 1;
                       echo "<tr class=\"text-center\">";
                       echo "<td class=\"d-none\">".$row['id']."</td>";
-                      echo "<td>".$id."</td><td>".$senderDept_id."</td><td>".$row['service_name']."</td><td>".$row['subject']."</td><td>".$row['description']."</td><td>".$row['created_at']."</td><td class=\"text-primary font-weight-bold\">".$row['status']."</td>";
+                      echo "<td>".$id."</td><td>".$senderDept_id."</td><td>".$row['service_category']."</td><td>".$row['service_name']."</td><td>".$row['subject']."</td><td>".$row['description']."</td><td>".$row['created_at']."</td><td class=\"text-dark font-weight-bold\">".$row['status']."</td>";
                       echo "<td>";
                       echo "<div class='comments-section'>";
                       echo "<div class='existing-comments' data-complaint-id='".$row['id']."'></div>";
                       echo "<textarea class='form-control new-comment' rows='2' placeholder='Add a comment...'></textarea>";
-                      echo "<button class='btn btn-sm btn-primary add-comment-btn' data-complaint-id='".$row['id']."'>Comment</button>";
+                      echo "<button class='btn btn-sm btn-info add-comment-btn' data-complaint-id='".$row['id']."'>Comment</button>";
                       echo "</div>";
                       echo "</td>";
                       if ( $_SESSION['userType'] != 'User' )

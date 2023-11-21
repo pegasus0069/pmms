@@ -10,7 +10,7 @@
     <!-- Table Column -->
     <div class="col-md-12">
       <div class="card">
-        <div class="card-header card-header-primary">
+        <div class="card-header card-header-info">
           <div class="row">
             <div class="col-12 col-xl-9 col-lg-8">
               <h4 class="card-title">Announcements</h4>
@@ -24,7 +24,7 @@
         <div class="card-body">
           <div class="table-responsive">
             <table class="table" id="announcements-table">
-              <thead class="text-primary text-center">
+              <thead class="text-dark text-center">
                 <th>ID</th><th>Subject</th><th>Message</th><th>Date</th><th>Action</th>
               </thead>
               <tbody>
@@ -68,7 +68,7 @@
 <div class="modal fade" id="createAnnouncementModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content card">
-      <div class="modal-header card-header-primary">
+      <div class="modal-header card-header-info">
         <h5 class="modal-title card-title" id="exampleModalLongTitle">Create New Announcement</h5>
         <button type="button" class="close card-header-icon" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
@@ -116,7 +116,7 @@
 <div class="modal fade" id="updateAnnouncementModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content card">
-      <div class="modal-header card-header-primary">
+      <div class="modal-header card-header-info">
         <h5 class="modal-title card-title" id="exampleModalLongTitle">Update Announcement</h5>
         <button type="button" class="close card-header-icon" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>

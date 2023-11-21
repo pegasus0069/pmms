@@ -10,7 +10,7 @@
     ?>
     <div class="row">
         <div class="card" style="background: none !important;">
-            <div class="card-header card-header-primary">
+            <div class="card-header card-header-info">
                 <h4 class="card-title">Tickets Issued to You</h4>
                 <p class="card-category">
                     Stats of the Tickets handled by you / your department 
@@ -21,7 +21,7 @@
                     <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
                         <div class="card card-stats">
                             <div class="card-header card-header-danger card-header-icon">
-                                <div class="card-icon"><a href="#process"><i class="material-icons">assessment</i></a></div>
+                                <div class="card-icon"><a style="color: white" href="#process"><i class="material-icons">assessment</i></a></div>
                                 <p class="card-category">Total</p>
                                 <?php
                                     $sql = "SELECT complaints.created_at FROM `complaints` JOIN `users` ON complaints.dept_id=users.dept_id WHERE users.id='".$_SESSION['userId']."' ORDER BY complaints.created_at DESC";
@@ -46,7 +46,7 @@
                     <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
                         <div class="card card-stats">
                             <div class="card-header card-header-info card-header-icon">
-                                <div class="card-icon"><a href="#process"><i class="material-icons">thumb_up_alt</i></a></div>
+                                <div class="card-icon"><a style="color: white" href="#process"><i class="material-icons">thumb_up_alt</i></a></div>
                                 <p class="card-category">Completed</p>
                                 <?php
                                     $sql = "SELECT complaints.created_at FROM `complaints` JOIN `users` ON complaints.dept_id=users.dept_id WHERE users.id='".$_SESSION['userId']."' AND complaints.status='Approved' ORDER BY complaints.created_at DESC";
@@ -71,7 +71,7 @@
                     <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
                         <div class="card card-stats">
                             <div class="card-header card-header-success card-header-icon">
-                                <div class="card-icon"><a href="#process"><i class="material-icons">build</i></a></div>
+                                <div class="card-icon"><a style="color: white" href="#process"><i class="material-icons">build</i></a></div>
                                 <p class="card-category">Resolved</p>
                                 <?php
                                     $sql = "SELECT complaints.created_at FROM `complaints` JOIN `users` ON complaints.dept_id=users.dept_id WHERE users.id='".$_SESSION['userId']."' AND complaints.status='Resolved' ORDER BY complaints.created_at DESC";
@@ -96,7 +96,7 @@
                     <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
                         <div class="card card-stats">
                             <div class="card-header card-header-warning card-header-icon">
-                                <div class="card-icon"><a href="#process"><i class="material-icons">info_outline</i></a></div>
+                                <div class="card-icon"><a style="color: white" href="#process"><i class="material-icons">info_outline</i></a></div>
                                 <p class="card-category">Pending</p>
                                 <?php
                                     $sql = "SELECT complaints.created_at FROM `complaints` JOIN `users` ON complaints.dept_id=users.dept_id WHERE users.id='".$_SESSION['userId']."' AND complaints.status='Pending' ORDER BY complaints.created_at DESC";
@@ -133,7 +133,7 @@
     <!-- Complaints by a user/ user's department -->
     <div class="row">
         <div class="card" style="background: none !important;">
-            <div class="card-header card-header-primary">
+            <div class="card-header card-header-info">
                 <h4 class="card-title">Tickets Issued by You</h4>
                 <p class="card-category">
                     Stats of the Tickets filed by you 
@@ -252,7 +252,7 @@
     <div class="row">
         <div class="col-lg-5 col-md-12">
             <div class="card">
-                <div class="card-header card-header-primary">
+                <div class="card-header card-header-info">
                     <h4 class="card-title">Departments / Categories</h4>
                     <p class="card-category">
                         <?php
@@ -273,7 +273,7 @@
                 </div>
                 <div class="card-body table-responsive">
                     <table class="table table-hover">
-                        <thead class="text-warning text-center">
+                        <thead class="text-dark text-center">
                             <th>ID</th><th>Department Code</th><th>Department Name</th>
                         </thead>
                         <tbody>
@@ -305,7 +305,7 @@
 
         <div class="col-lg-7 col-md-12">
             <div class="card">
-                <div class="card-header card-header-primary">
+                <div class="card-header card-header-info">
                     <h4 class="card-title">Resolvers</h4>
                     <p class="card-category">
                         <?php
@@ -326,7 +326,7 @@
                 </div>
                 <div class="card-body table-responsive">
                     <table class="table table-hover">
-                        <thead class="text-warning text-center">
+                        <thead class="text-dark text-center">
                             <th>ID</th><th>Name</th><th>Email</th><th>Phone</th><th>Department</th>
                         </thead>
                         <tbody>
@@ -358,7 +358,7 @@
 
         <div class="col-lg-7 col-md-12">
             <div class="card">
-                <div class="card-header card-header-primary">
+                <div class="card-header card-header-info">
                     <h4 class="card-title">Service List</h4>
                     <p class="card-category">
                         <?php
@@ -379,7 +379,7 @@
                 </div>
                 <div class="card-body table-responsive">
                     <table class="table table-hover">
-                        <thead class="text-warning text-center">
+                        <thead class="text-dark text-center">
                             <th>ID</th><th>Service Name</th><th>Description</th><th>Offered By</th>
                         </thead>
                         <tbody>
