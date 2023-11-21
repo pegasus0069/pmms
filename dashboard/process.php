@@ -37,7 +37,7 @@
   <div class="row">
     <div class="col-md-12">
       <div class="card">
-        <div class="card-header card-header-primary">
+        <div class="card-header card-header-info">
           <div class="row">
             <div class="col-12 col-xl-9 col-lg-8">
               <h4 class="card-title">Tickets Issued By You</h4>
@@ -48,7 +48,7 @@
               {
             ?>
             <div class="col-12 col-xl-3 col-lg-3">
-                <button class="card-title btn btn-success pl-0 mt-1" data-toggle="modal" data-target="#createComplaintModal"><i class="material-icons pl-3 pr-2">add</i>New Ticket</button>
+                <button style="color:black;" class="card-title btn btn-warning pl-0 mt-1" data-toggle="modal" data-target="#createComplaintModal"><i class="material-icons pl-3 pr-2">add</i>New Ticket</button>
             </div>
             <?php
               }
@@ -58,8 +58,8 @@
         <div class="card-body">
           <div class="table-responsive">
             <table class="table" id="complaints-table">
-              <thead class="text-primary text-center">
-                <th>ID</th><th>Department</th><th>Service Name</th><th>Subject</th><th>Description</th><th>Date</th><th>Status</th><th>Comments</th><th>Action</th>
+              <thead class="text-dark text-center">
+                <th>ID</th><th>Department</th><th>Service Category</th><th>Service Name</th><th>Subject</th><th>Description</th><th>Date</th><th>Status</th><th>Comments</th><th>Action</th>
               </thead>
               <tbody>
               <?php
@@ -74,12 +74,12 @@
                       $id += 1;
                       echo "<tr class=\"text-center\">";
                       echo "<td class=\"d-none\">".$row['id']."</td>";
-                      echo "<td>".$id."</td><td>".$row['dept_id']."</td><td>".$row['service_name']."</td><td>".$row['subject']."</td><td>".$row['description']."</td><td>".$row['created_at']."</td><td class=\"text-primary font-weight-bold\">".$row['status']."</td>";
+                      echo "<td>".$id."</td><td>".$row['dept_id']."</td><td>".$row['service_category']."</td><td>".$row['service_name']."</td><td>".$row['subject']."</td><td>".$row['description']."</td><td>".$row['created_at']."</td><td class=\"text-dark font-weight-bold\">".$row['status']."</td>";
                       echo "<td>";
                       echo "<div class='comments-section'>";
                       echo "<div class='existing-comments' data-complaint-id='".$row['id']."'></div>";
                       echo "<textarea class='form-control new-comment' rows='2' placeholder='Add a comment...'></textarea>";
-                      echo "<button class='btn btn-sm btn-primary add-comment-btn' data-complaint-id='".$row['id']."'>Comment</button>";
+                      echo "<button class='btn btn-sm btn-info add-comment-btn' data-complaint-id='".$row['id']."'>Comment</button>";
                       echo "</div>";
                       echo "</td>";
                       if ( $_SESSION['userType'] == 'User' || $_SESSION['userType'] == 'Resolver')
@@ -124,7 +124,7 @@
 <div class="modal fade" id="createComplaintModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content card">
-      <div class="modal-header card-header-primary">
+      <div class="modal-header card-header-info">
         <h5 class="modal-title card-title" id="exampleModalLongTitle">Issue New Ticket</h5>
         <button type="button" class="close card-header-icon" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
@@ -146,6 +146,7 @@
 
                     if (mysqli_num_rows($result) > 0)
                     {
+                      echo "<option selected>Select Department</option>";
                       $count = 1;
                       while($row = mysqli_fetch_assoc($result))
                       {
@@ -168,6 +169,18 @@
                 </select>
               </div>
             </div>
+          </div>
+          
+           <!-- Service Category -->
+           <div class="row">
+              <div class="col-md-12">
+                  <div class="form-group">
+                      <label for="serviceCategory" class="bmd-label-floating" style="font-size:12pt;">Service Category</label>
+                      <select name="serviceCategory" class="form-control" id="serviceCategory" required>
+                          <!-- Options will be populated dynamically using AJAX -->
+                      </select>
+                  </div>
+              </div>
           </div>
           
           <!-- Service Name -->
@@ -223,17 +236,59 @@ $('#departmentDropdown').change(function () {
         var departmentId = $(this).val();
         $.ajax({
             type: 'POST',
-            url: 'get_services.php', // Create a PHP file to fetch services based on department
+            url: 'get_services_category.php', // Create a PHP file to fetch services based on department
             data: { departmentId: departmentId },
             dataType: 'json',
             success: function (data) {
+                //Service Category
+                $('#serviceCategory').empty(); // Clear the dropdown
+                $('#serviceName').empty(); // Clear the dropdown
+                
+                var categoriesAdded = new Set(); // To track added categories
+                if (data.length > 0) {
+                  $('#serviceCategory').append('<option selected>Select Service Category</option>');
+                  $('#serviceName').append('<option selected>Select Service Name</option>');
+                
+                  $.each(data, function (index, service) {
+                    if (!categoriesAdded.has(service.category)) {
+                      if(categoriesAdded.size === 0){
+                        $('#serviceCategory').append('<option value="' + service.category + '">' + service.category + '</option>');
+                        categoriesAdded.add(service.category); // Mark this category as added
+                      }
+                      else{
+                        $('#serviceCategory').append('<option value="' + service.category + '">' + service.category + '</option>');
+                        categoriesAdded.add(service.category); // Mark this category as added
+                      }
+                    }
+                  });
+                } 
+                else {
+                  $('#serviceCategory').append('<option value="" selected>No service category available!</option>');
+                }
+            },
+            error: function () {
+                console.log('Error fetching services.');
+            }
+        });
+    });
+
+    $('#serviceCategory').change(function () {
+        var serviceCategory = $(this).val();
+        $.ajax({
+            type: 'POST',
+            url: 'get_services_name.php', // Create a PHP file to fetch services based on department
+            data: { serviceCategory: serviceCategory },
+            dataType: 'json',
+            success: function (data) {
+              //Service Name
                 $('#serviceName').empty(); // Clear the dropdown
                 if (data.length > 0) {
                     $.each(data, function (index, service) {
                         $('#serviceName').append('<option value="' + service.name + '">' + service.name + '</option>');
+                        
                     });
                 } else {
-                    $('#serviceName').append('<option value="" selected>No services available</option>');
+                    $('#serviceName').append('<option value="" selected>No services available!</option>');
                 }
             },
             error: function () {

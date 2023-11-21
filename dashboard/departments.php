@@ -9,7 +9,7 @@
     <!-- Table Column -->
     <div class="col-md-12">
       <div class="card">
-        <div class="card-header card-header-primary">
+        <div class="card-header card-header-info">
           <div class="row">
             <div class="col-12 col-xl-9 col-lg-8">
               <h4 class="card-title">Departments</h4>
@@ -23,7 +23,7 @@
         <div class="card-body">
           <div class="table-responsive">
             <table class="table" id="departments-table">
-              <thead class="text-primary text-center">
+              <thead class="text-dark text-center">
                 <th>ID</th><th>Department Code</th><th>Department Name</th><th>Action</th>
               </thead>
               <tbody>
@@ -67,7 +67,7 @@
 <div class="modal fade" id="createDepartmentModal" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content card">
-      <div class="modal-header card-header-primary">
+      <div class="modal-header card-header-info">
         <h5 class="modal-title card-title" id="exampleModalLongTitle">Add New Department</h5>
         <button type="button" class="close card-header-icon" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
@@ -114,7 +114,7 @@
 <div class="modal fade" id="updateDepartmentModal" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content card">
-      <div class="modal-header card-header-primary">
+      <div class="modal-header card-header-info">
         <h5 class="modal-title card-title" id="exampleModalLongTitle">Update Department</h5>
         <button type="button" class="close card-header-icon" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>

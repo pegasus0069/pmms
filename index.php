@@ -11,7 +11,7 @@
 
         <p class="lead">
             <a class="btn btn-danger btn-lg btn-md" href="./dashboard/#process" role="button">Issue a Ticket</a>
-            <a class="btn btn-primary btn-lg btn-md" href="./dashboard/#processtoyou" role="button">Check Status</a>
+            <a class="btn btn-info btn-lg btn-md" href="./dashboard/#processtoyou" role="button">Check Status</a>
         </p>
     </div>
 

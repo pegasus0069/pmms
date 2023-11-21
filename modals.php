@@ -32,7 +32,7 @@
                     </div>
                     
                     <!-- Login Submit Button -->
-                    <button type="submit" name="login-submit" class="btn btn-primary mt-2 w-100">Sign in</button>
+                    <button type="submit" name="login-submit" class="btn btn-info mt-2 w-100">Sign in</button>
                 </form>
             </div>
 
@@ -117,7 +117,7 @@
                     </div>
                     
                     <!-- Sign Up Submit Button -->
-                    <button type="submit" name="signup-submit" class="btn btn-primary mt-2 w-100">Create Account</button>
+                    <button type="submit" name="signup-submit" class="btn btn-info mt-2 w-100">Create Account</button>
                 </form>
             </div>
             <div class="modal-footer mx-auto">
@@ -147,7 +147,7 @@
                         <input type="email" name="resetPassEmail" class="form-control vw-100" id="resetPassEmail" placeholder="email@example.com" required autocomplete="reset-email">
                     </div>
                     <!-- Reset Password Submit Button -->
-                    <button type="submit" name="mailResetPass-submit" class="btn btn-primary mt-2 w-100">Send mail to reset password</button>
+                    <button type="submit" name="mailResetPass-submit" class="btn btn-info mt-2 w-100">Send mail to reset password</button>
                 </form>
             </div>
         </div>

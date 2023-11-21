@@ -3,15 +3,15 @@
 
 include_once('../config/db.php');
 
-if (isset($_POST['departmentId'])) {
-    $departmentId = $_POST['departmentId'];
+if (isset($_POST['serviceCategory'])) {
+    $serviceCategory = $_POST['serviceCategory'];
     
-    $sql = "SELECT services.id, services.name FROM departments JOIN services
-     on departments.id = services.department_id WHERE departments.code = ?";
+    $sql = "SELECT services.id, services.name FROM services
+     WHERE services.category = ?";
     $stmt = mysqli_stmt_init($conn);
 
     if (mysqli_stmt_prepare($stmt, $sql)) {
-        mysqli_stmt_bind_param($stmt, "s", $departmentId);
+        mysqli_stmt_bind_param($stmt, "s", $serviceCategory);
         mysqli_stmt_execute($stmt);
         $result = mysqli_stmt_get_result($stmt);
 

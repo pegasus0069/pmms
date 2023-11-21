@@ -10,7 +10,7 @@
     <!-- Table Column -->
     <div class="col-md-12">
       <div class="card">
-        <div class="card-header card-header-primary">
+        <div class="card-header card-header-info">
           <div class="row">
             <div class="col-12 col-xl-10 col-lg-8">
               <h4 class="card-title">Users</h4>
@@ -25,7 +25,7 @@
         <div class="card-body">
           <div class="table-responsive">
             <table class="table" id="user-table">
-              <thead class="text-primary text-center">
+              <thead class="text-dark text-center">
                 <th>ID</th><th>Name</th><th>Email</th><th>Phone</th><th>Role</th><th>Department</th><th>Action</th>
               </thead>
               <tbody>
@@ -41,7 +41,7 @@
                       $id += 1;
                       echo "<tr class=\"text-center\">";
                       echo "<td class=\"d-none\">".$row['id']."</td>";
-                      echo "<td>".$id."</td><td>".$row['name']."</td><td>".$row['email']."</td><td>".$row['phone']."</td><td class=\"text-primary font-weight-bold\">".$row['role'];
+                      echo "<td>".$id."</td><td>".$row['name']."</td><td>".$row['email']."</td><td>".$row['phone']."</td><td class=\"text-dark font-weight-bold\">".$row['role'];
                       if ( $row['role'] != 'User' )
                         echo "</td><td>".$row['dept_name']."</td>";
                       else
@@ -72,7 +72,7 @@
 <div class="modal fade" id="createUserModal" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content card">
-      <div class="modal-header card-header-primary">
+      <div class="modal-header card-header-info">
         <h5 class="card-title" id="exampleModalLongTitle">Create New User</h5>
         <button type="button" class="close card-header-icon" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
@@ -191,7 +191,7 @@
 <div class="modal fade" id="updateUserModal" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content card">
-      <div class="modal-header card-header-primary">
+      <div class="modal-header card-header-info">
         <h5 class="card-title">Update User</h5>
         <button type="button" class="close card-header-icon" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>

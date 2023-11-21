@@ -18,7 +18,7 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-transparent mx-auto py-2 web-theme">
+        <nav class="navbar navbar-expand-md navbar fixed-top bg-transparent mx-auto py-2 web-theme">
             <!-- Company Name -->
             <a class="navbar-brand" href="<?php $siteUrl?>"><img src="./assets/img/favicon.png" alt="PMMS" title="PMMS" style="width: 80px;"></a>
             <!-- Account Button & Form -->

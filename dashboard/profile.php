@@ -7,7 +7,7 @@
     <div class="col-md-8 mx-auto">
       <div class="card card-profile">
         <form method="post" class="md-form" id="userProfile-form" enctype="multipart/form-data">
-          <div class="card-header card-header-primary">
+          <div class="card-header card-header-info">
             <div class="card-avatar">
               <?php
                 $sql = "SELECT * FROM `users` WHERE `id`='".$_SESSION['userId']."'";
@@ -100,7 +100,7 @@
           <div class="card-footer pb-2">
             <div class="row w-100 text-center">
               <div class="col-12 col-md-6">
-                <button type="button" class="btn btn-primary btn-round"><span class="material-icons">create</span>&nbsp;Edit Profile</button>
+                <button type="button" class="btn btn-info btn-round"><span class="material-icons">create</span>&nbsp;Edit Profile</button>
                 <button type="submit" class="btn btn-info btn-round d-none" disabled>Update Profile</button>
               </div>
               <div class="col-12 col-md-6">
@@ -121,7 +121,7 @@
 <div class="modal fade" id="updatePasswordModal" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content card">
-      <div class="modal-header card-header-primary">
+      <div class="modal-header card-header-info">
         <h5 class="card-title">Change Password</h5>
         <button type="button" class="close card-header-icon" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
@@ -171,7 +171,7 @@
 <div class="modal fade" id="userConfirmationModal" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content card">
-      <div class="modal-header card-header-primary">
+      <div class="modal-header card-header-info">
         <h5 class="card-title">Update Confirmation</h5>
         <button type="button" class="close card-header-icon" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>

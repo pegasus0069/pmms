@@ -15,7 +15,7 @@ body {
 }
 
 .web-theme {
-    background-image: linear-gradient(to bottom right, #000 30%, #8e2de2) !important;
+    background-image: linear-gradient(to bottom right, #000 30%, #2d78e2) !important;
     color: #fff !important;
 }
 
@@ -71,12 +71,12 @@ main{
 }
 /* Handle */
 ::-webkit-scrollbar-thumb {
-    background: linear-gradient(to bottom, #8e2de2, #000); 
+    background: linear-gradient(to bottom, #af9dbe, #000); 
     border-radius: 10px;
 }
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(to bottom,#000, #8e2de2);
+    background: linear-gradient(to bottom,#000, #cbcbcb);
 }
 
 /* ================ */

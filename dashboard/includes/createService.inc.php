@@ -9,11 +9,15 @@ if($_POST)
 {
     require_once('../../includes/functions.inc.php');
     
+    $category = $_POST['serviceCategory'];
     $name = $_POST['serviceName'];
     $description = htmlspecialchars($_POST['serviceDescription']);
     $deptID = $_POST['serviceideptid'];
     
     // Initial Validation and Error Handling
+    if(empty($name)){
+        $error_log['serviceCategory'] = 'Invalid Category!';
+    }
     if(empty($name)){
         $error_log['serviceName'] = 'Invalid Name!';
     }
@@ -52,7 +56,7 @@ if($_POST)
             else
             {
                 // if not then insert user details to the table
-                $sql = "INSERT INTO services (name, description, department_id, created_at) VALUES (?,?,?,NOW())";
+                $sql = "INSERT INTO services (category, name, description, department_id, created_at) VALUES (?,?,?,?,NOW())";
 
                 $stmt = mysqli_stmt_init($conn);
                 if(!mysqli_stmt_prepare($stmt, $sql))
@@ -62,7 +66,7 @@ if($_POST)
                 }
                 else
                 {
-                    mysqli_stmt_bind_param($stmt, "sss", $name, $description, $deptID);
+                    mysqli_stmt_bind_param($stmt, "ssss", $category, $name, $description, $deptID);
                     mysqli_stmt_execute($stmt);
 
                     $response['status'] = 'success';

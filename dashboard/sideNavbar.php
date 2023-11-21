@@ -26,7 +26,7 @@
         color: white;              /* White text color for active state */
     }
      .nav-item:hover > a.nav-link, .nav-item.active > a.nav-link {
-        background-color: purple;  /* Purple background for active/hover state */
+        background-color: #E1DFE0;  /* Purple background for active/hover state */
         color: white;              /* White text color for active/hover state */
     }
     .nav-item.active .nav-sub-items {
@@ -51,6 +51,7 @@
                     <p>Profile</p>
                 </a>
             </li>
+            
 
 
             <?php
