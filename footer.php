@@ -1,7 +1,7 @@
 <!-- Footer starts here -->
-<footer class="page-footer font-small text-light" style="background: linear-gradient(to left bottom, #8e2de2, #111 60%); box-shadow: 0px 0px 10px 4px #000;">
+<footer class="page-footer font-small text-light" style="background: linear-gradient(to left bottom, #2d78e2, #111 60%); box-shadow: 0px 0px 10px 4px #000;">
 
-  <div style="background: linear-gradient(to left, #8e2de2 , #111 70%); box-shadow: 0px 0px 4px 1px #000;">
+  <div style="background: linear-gradient(to left, #2d78e2 , #111 70%); box-shadow: 0px 0px 4px 1px #000;">
     <div class="container">
 
       <!-- Grid row-->
@@ -29,7 +29,7 @@
           Dept. of CSE, IUB
         </p>
         <p>
-          <i class="fa fa-envelope mr-2">arnoyk123@gmail.com</i>
+          <i class="fa fa-envelope mr-2">arnoyk123sets@iub.edu.bd</i>
         </p>
         <p>
           <i class="fa fa-phone mr-2">+ 880 171 791 6061</i>
