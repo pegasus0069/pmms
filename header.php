@@ -65,16 +65,16 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto w-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="<?php $siteUrl?>#home">Home<span class="sr-only">(current)</span></a>
+                        <a style="color:white;" class="nav-link" href="<?php $siteUrl?>#home">Home<span class="sr-only">(current)</span></a>
                     </li>
                     <!--<li class="nav-item">
                         <a class="nav-link" href="<?php $siteUrl?>#announcements">Announcements</a>
                     </li> -->
                     <li class="nav-item">
-                        <a class="nav-link" href="<?php $siteUrl?>#about">About</a>
+                        <a style="color:white;" class="nav-link" href="<?php $siteUrl?>#about">About</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="<?php $siteUrl?>#contact">Contact</a>
+                        <a style="color:white;" class="nav-link" href="<?php $siteUrl?>#contact">Contact</a>
                     </li>
                 </ul>
                 <input class="form-control w-100 mx-sm-2" type="search" placeholder="Search" aria-label="Search">

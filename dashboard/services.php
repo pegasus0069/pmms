@@ -132,7 +132,7 @@
                 <ul id="departmentsList" class="list-group">
                   <?php foreach ($departments as $department): ?>
                     <li class="list-group-item">
-                      <span class="badge badge-primary badge-pill" style="font-size:10px;"><?php echo $department['id']; ?></span>
+                      <span class="badge badge-primary badge-pill" style="font-size:14px;"><?php echo $department['id']; ?></span>
                       <?php echo $department['name']; ?>
                     </li>
                   <?php endforeach; ?>
@@ -217,7 +217,7 @@
                 <ul id="departmentsList" class="list-group">
                   <?php foreach ($departments as $department): ?>
                     <li class="list-group-item">
-                      <span class="badge badge-primary badge-pill" style="font-size:10px;"><?php echo $department['id']; ?></span>
+                      <span class="badge badge-primary badge-pill" style="font-size:14px;"><?php echo $department['id']; ?></span>
                       <?php echo $department['name']; ?>
                     </li>
                   <?php endforeach; ?>

@@ -282,10 +282,11 @@ $('#departmentDropdown').change(function () {
             success: function (data) {
               //Service Name
                 $('#serviceName').empty(); // Clear the dropdown
+                
                 if (data.length > 0) {
+                  $('#serviceName').append('<option selected>Selected Service Name</option>');
                     $.each(data, function (index, service) {
                         $('#serviceName').append('<option value="' + service.name + '">' + service.name + '</option>');
-                        
                     });
                 } else {
                     $('#serviceName').append('<option value="" selected>No services available!</option>');
