@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Nov 21, 2023 at 06:04 AM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.2.4
+-- Host: localhost:3306
+-- Generation Time: Nov 21, 2023 at 11:19 PM
+-- Server version: 8.0.35-cll-lve
+-- PHP Version: 8.1.16
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `pms`
+-- Database: `fablabiu_pms`
 --
 
 -- --------------------------------------------------------
@@ -28,10 +28,10 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `announcements` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `title` varchar(100) NOT NULL,
-  `body` varchar(255) NOT NULL,
-  `owner_id` bigint(20) UNSIGNED NOT NULL,
+  `id` bigint UNSIGNED NOT NULL,
+  `title` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `body` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `owner_id` bigint UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -50,11 +50,11 @@ INSERT INTO `announcements` (`id`, `title`, `body`, `owner_id`, `created_at`) VA
 --
 
 CREATE TABLE `comments` (
-  `id` int(11) NOT NULL,
-  `complaint_id` int(11) NOT NULL,
-  `user_id` bigint(20) UNSIGNED NOT NULL,
-  `comment` text NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+  `id` int NOT NULL,
+  `complaint_id` int NOT NULL,
+  `user_id` bigint UNSIGNED NOT NULL,
+  `comment` text COLLATE utf8mb4_general_ci NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -85,7 +85,16 @@ INSERT INTO `comments` (`id`, `complaint_id`, `user_id`, `comment`, `created_at`
 (74, 21, 7, 'Hello!', '2023-11-12 05:08:58'),
 (75, 21, 7, 'The problem is resolved.', '2023-11-12 05:09:27'),
 (76, 22, 7, 'Hello', '2023-11-12 05:52:33'),
-(77, 22, 7, 'The problem is still unresolved.', '2023-11-12 06:03:49');
+(77, 22, 7, 'The problem is still unresolved.', '2023-11-12 06:03:49'),
+(78, 29, 11, 'Hello', '2023-11-21 08:31:01'),
+(79, 30, 7, 'The problem is solved!', '2023-11-21 08:41:11'),
+(80, 28, 13, 'Test', '2023-11-21 09:01:50'),
+(81, 31, 13, 'Resolved', '2023-11-21 09:03:01'),
+(82, 32, 15, 'Hello', '2023-11-21 09:20:42'),
+(83, 32, 7, 'Hello', '2023-11-21 09:21:44'),
+(84, 32, 7, 'Resolved', '2023-11-21 09:22:18'),
+(85, 32, 15, 'The problem is not solved yet properly', '2023-11-21 09:23:00'),
+(86, 28, 14, 'Test', '2023-11-21 09:57:11');
 
 -- --------------------------------------------------------
 
@@ -94,15 +103,15 @@ INSERT INTO `comments` (`id`, `complaint_id`, `user_id`, `comment`, `created_at`
 --
 
 CREATE TABLE `complaints` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `subject` varchar(100) NOT NULL,
-  `description` varchar(255) NOT NULL,
-  `dept_id` varchar(6) NOT NULL,
-  `user_id` bigint(20) UNSIGNED NOT NULL,
-  `status` enum('Pending','Approved','Unresolved','Resolved','Completed') NOT NULL DEFAULT 'Pending',
+  `id` bigint UNSIGNED NOT NULL,
+  `subject` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `description` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `dept_id` varchar(6) COLLATE utf8mb4_general_ci NOT NULL,
+  `user_id` bigint UNSIGNED NOT NULL,
+  `status` enum('Pending','Approved','Unresolved','Resolved','Completed') COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'Pending',
   `created_at` timestamp NULL DEFAULT NULL,
-  `service_name` text DEFAULT NULL,
-  `service_category` text NOT NULL
+  `service_name` text COLLATE utf8mb4_general_ci,
+  `service_category` text COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -129,7 +138,16 @@ INSERT INTO `complaints` (`id`, `subject`, `description`, `dept_id`, `user_id`, 
 (20, 'Router required at Fablab', 'Router required at Fablab', 'CITS', 7, 'Pending', '2023-11-12 04:10:07', 'Network Infrastructure', 'CITS'),
 (21, 'Lab Computer Number 001 is not working', 'Lab Computer Number 001 is not working', 'CITS', 7, 'Approved', '2023-11-12 05:08:12', 'Computer Labs', 'CITS'),
 (22, 'Router required at Fablab', 'Test purpose', 'CITS', 7, 'Unresolved', '2023-11-12 05:52:16', 'Learning Management Systems (LMS)', 'CITS'),
-(23, 'Router required at Fablab', 'Router required at Fablab', 'CITS', 8, 'Pending', '2023-11-20 22:25:25', 'Learning Management Systems (LMS)', 'CITS');
+(23, 'Router required at Fablab', 'Router required at Fablab', 'CITS', 8, 'Pending', '2023-11-20 22:25:25', 'Learning Management Systems (LMS)', 'CITS'),
+(24, 'Test Subject', 'Test description', 'FAC', 10, 'Pending', '2023-11-21 08:01:02', 'Legal Issue ', ''),
+(25, 'Test Service', 'Test Service', 'FAC', 10, 'Pending', '2023-11-21 08:01:37', 'Legal Issue ', ''),
+(26, 'Legal Issue Test', 'Legal Issue Test', 'FAC', 10, 'Pending', '2023-11-21 08:06:47', 'Legal Issue ', ''),
+(27, 'Test Subject', 'Test description', 'FAC', 7, 'Pending', '2023-11-21 08:08:37', 'Legal Issue ', ''),
+(28, 'Test Subject', 'Test Subject', 'O&M', 7, 'Resolved', '2023-11-21 08:09:50', 'Power Supply and Distribution', ''),
+(29, 'TEST Subject', 'Test Subject', 'CITS', 11, 'Pending', '2023-11-21 08:30:45', 'Email and Communication', ''),
+(30, 'Test Subject', 'Test Description', 'CITS', 12, 'Approved', '2023-11-21 08:39:56', 'Email and Communication', ''),
+(31, 'Test Subject', 'Test Subject', 'O&M', 13, 'Approved', '2023-11-21 09:02:32', 'Generator support', ''),
+(32, 'Test Subject', 'Test Description', 'CITS', 15, 'Approved', '2023-11-21 09:20:13', 'Technical Support', '');
 
 -- --------------------------------------------------------
 
@@ -138,9 +156,9 @@ INSERT INTO `complaints` (`id`, `subject`, `description`, `dept_id`, `user_id`, 
 --
 
 CREATE TABLE `departments` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `code` varchar(6) NOT NULL,
+  `id` bigint UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `code` varchar(6) COLLATE utf8mb4_general_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -165,11 +183,11 @@ INSERT INTO `departments` (`id`, `name`, `code`, `created_at`) VALUES
 --
 
 CREATE TABLE `password_resets` (
-  `id` int(11) NOT NULL,
+  `id` int NOT NULL,
   `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `selector` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `token` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `expires_at` timestamp NOT NULL DEFAULT current_timestamp()
+  `expires_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -179,12 +197,12 @@ CREATE TABLE `password_resets` (
 --
 
 CREATE TABLE `services` (
-  `id` int(11) NOT NULL,
-  `name` text NOT NULL,
-  `description` text DEFAULT NULL,
-  `department_id` int(11) DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `category` text NOT NULL
+  `id` int NOT NULL,
+  `name` text COLLATE utf8mb4_general_ci NOT NULL,
+  `description` text COLLATE utf8mb4_general_ci,
+  `department_id` int DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `category` text COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -224,7 +242,9 @@ INSERT INTO `services` (`id`, `name`, `description`, `department_id`, `created_a
 (32, 'New AC Installation', 'New AC installation support', 8, '2023-11-21 03:38:42', 'Mechanical Works'),
 (33, 'Infrastructure Development', 'Infrastructure development related services', 8, '2023-11-21 03:39:19', 'Infrastructure Development'),
 (34, 'Others', 'Others', 8, '2023-11-21 03:39:35', 'Others'),
-(35, 'Legal Issue ', 'Legal Issue ', 7, '2023-11-21 04:15:08', 'Legal Issue ');
+(35, 'Legal Issue ', 'Legal Issue ', 7, '2023-11-21 04:15:08', 'Legal Issue '),
+(36, 'Issue New IP Phone Number', 'Issue New IP Phone Number', 8, '2023-11-21 08:47:05', 'Others'),
+(37, 'Name change of IP Phone holder', 'Name change of IP Phone holder', 8, '2023-11-21 08:48:42', 'Others');
 
 -- --------------------------------------------------------
 
@@ -233,13 +253,13 @@ INSERT INTO `services` (`id`, `name`, `description`, `department_id`, `created_a
 --
 
 CREATE TABLE `users` (
-  `id` bigint(20) UNSIGNED NOT NULL,
+  `id` bigint UNSIGNED NOT NULL,
   `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `phone` varchar(11) NOT NULL,
+  `phone` varchar(11) COLLATE utf8mb4_general_ci NOT NULL,
   `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
   `role` enum('Admin','Resolver','User') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'User',
-  `dept_id` varchar(6) DEFAULT NULL,
+  `dept_id` varchar(6) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `profile_picture` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'profileDefault.png',
   `remember_token` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -259,7 +279,12 @@ INSERT INTO `users` (`id`, `name`, `phone`, `email`, `email_verified_at`, `role`
 (5, 'Mahady Hasan', '1717916061', 'mahady@iub.edu.bd', NULL, 'Resolver', 'CSE', '$2y$10$a5CpTfFiPFAuprVVCQT4VeJdRdHTkfGlM9SUQpRsWQ8r7V8hVLGvO', 'mahady.jpeg', NULL, '2023-09-09 22:22:06', '2023-09-09 23:40:38'),
 (7, 'CITS Admin', '1717916061', 'cits@iub.edu.bd', NULL, 'Resolver', 'CITS', '$2y$10$nfFBE6ThiS.K4okrpANi5eP14SL4nwDl0MYOw9LPHo7mO0lalZ9m6', 'profileDefault.png', NULL, '2023-09-10 01:08:09', NULL),
 (8, 'Purchase Admin', '1717916062', 'purchase@iub.edu.bd', NULL, 'Resolver', 'P&P', '$2y$10$CIU2WIKtKe9SywuOLIDIPuncAtd5BXyzYNQkQynn4zEEvlBivYP7O', 'profileDefault.png', NULL, '2023-09-21 02:52:35', NULL),
-(10, 'Facilities Admin', '1717916061', 'facilities@iub.edu.bd', NULL, 'Resolver', 'FAC', '$2y$10$FPobv1yzqteRcP16aigSGOXMcwEeWfaa5K1Rg.70X6/b./.OhIqYW', 'profileDefault.png', NULL, '2023-11-21 04:21:12', NULL);
+(10, 'Facilities Admin', '1717916061', 'facilities@iub.edu.bd', NULL, 'Resolver', 'FAC', '$2y$10$FPobv1yzqteRcP16aigSGOXMcwEeWfaa5K1Rg.70X6/b./.OhIqYW', 'profileDefault.png', NULL, '2023-11-21 04:21:12', NULL),
+(11, 'Mostofa', '1716364439', 'mostofa@iub.edu.bd', NULL, 'Resolver', 'O&M', '$2y$10$sqdeJAnA/2D6x76xOJWcbujaE35Y33HNmVkkgN8hy2TiOdiAFEoO6', 'profileDefault.png', NULL, '2023-11-21 08:28:36', NULL),
+(12, 'Md. Ashraful Alam', '1816054764', 'ashraf@iub.edu.bd', NULL, 'Resolver', 'O&M', '$2y$10$nMiVJz7GjvMtMxoOSnRNWeJaK2yF2R5vNga.1bum0fBmbZy4gjdrC', 'profileDefault.png', NULL, '2023-11-21 08:35:49', NULL),
+(13, 'Muhammad Zahedur Rahman', '1630408384', 'zahedur@iub.edu.bd', NULL, 'Resolver', 'O&M', '$2y$10$kas3MhFEjH7ng7pmO7gV2ei9Nwz/iSXTKXwU7lic2/pLONczWYH5W', 'profileDefault.png', NULL, '2023-11-21 08:57:21', NULL),
+(14, 'ASM Shah Alam', '1913464710', 's.alam@iub.edu.bd', NULL, 'Resolver', 'O&M', '$2y$10$sEAsHYhheYdV1b7eXBB3kOgExgb18FAmoX26RaKMTc6/442l92K7a', 'profileDefault.png', NULL, '2023-11-21 09:15:03', NULL),
+(15, 'Md Abdul Jabber', '1670179240', 'jabber@iub.edu.bd', NULL, 'Resolver', 'O&M', '$2y$10$5Yfy/RgsKgtVTlEKdLW5eug.FuWJNLgBEFxLgasQ7avaDkDGUhwey', 'profileDefault.png', NULL, '2023-11-21 09:17:19', NULL);
 
 --
 -- Indexes for dumped tables
@@ -323,43 +348,43 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `announcements`
 --
 ALTER TABLE `announcements`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=78;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=87;
 
 --
 -- AUTO_INCREMENT for table `complaints`
 --
 ALTER TABLE `complaints`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `departments`
 --
 ALTER TABLE `departments`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `password_resets`
 --
 ALTER TABLE `password_resets`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `services`
 --
 ALTER TABLE `services`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- Constraints for dumped tables

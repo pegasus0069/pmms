@@ -4,7 +4,7 @@
   $serverName = "localhost";
   $serverUser = "root";
   $serverPass = "";
-  $dbName     = "pms";
+  $dbName     = "fablabiu_pms";
 
 //  For Production Purpose - Remote Database(remotemysql.com)
  //   $serverName = "remotemysql.com";
