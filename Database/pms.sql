@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3306
--- Generation Time: Nov 21, 2023 at 11:19 PM
--- Server version: 8.0.35-cll-lve
--- PHP Version: 8.1.16
+-- Host: 127.0.0.1
+-- Generation Time: Nov 21, 2023 at 06:57 PM
+-- Server version: 10.4.28-MariaDB
+-- PHP Version: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -28,10 +28,10 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `announcements` (
-  `id` bigint UNSIGNED NOT NULL,
-  `title` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
-  `body` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `owner_id` bigint UNSIGNED NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `title` varchar(100) NOT NULL,
+  `body` varchar(255) NOT NULL,
+  `owner_id` bigint(20) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -50,11 +50,11 @@ INSERT INTO `announcements` (`id`, `title`, `body`, `owner_id`, `created_at`) VA
 --
 
 CREATE TABLE `comments` (
-  `id` int NOT NULL,
-  `complaint_id` int NOT NULL,
-  `user_id` bigint UNSIGNED NOT NULL,
-  `comment` text COLLATE utf8mb4_general_ci NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `id` int(11) NOT NULL,
+  `complaint_id` int(11) NOT NULL,
+  `user_id` bigint(20) UNSIGNED NOT NULL,
+  `comment` text NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -103,15 +103,15 @@ INSERT INTO `comments` (`id`, `complaint_id`, `user_id`, `comment`, `created_at`
 --
 
 CREATE TABLE `complaints` (
-  `id` bigint UNSIGNED NOT NULL,
-  `subject` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
-  `description` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `dept_id` varchar(6) COLLATE utf8mb4_general_ci NOT NULL,
-  `user_id` bigint UNSIGNED NOT NULL,
-  `status` enum('Pending','Approved','Unresolved','Resolved','Completed') COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'Pending',
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `subject` varchar(100) NOT NULL,
+  `description` varchar(255) NOT NULL,
+  `dept_id` varchar(6) NOT NULL,
+  `user_id` bigint(20) UNSIGNED NOT NULL,
+  `status` enum('Pending','Approved','Unresolved','Resolved','Completed') NOT NULL DEFAULT 'Pending',
   `created_at` timestamp NULL DEFAULT NULL,
-  `service_name` text COLLATE utf8mb4_general_ci,
-  `service_category` text COLLATE utf8mb4_general_ci NOT NULL
+  `service_name` text DEFAULT NULL,
+  `service_category` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -131,23 +131,24 @@ INSERT INTO `complaints` (`id`, `subject`, `description`, `dept_id`, `user_id`, 
 (12, 'Hello Test', 'This is another test job!', 'CITS', 4, 'Approved', '2023-09-21 02:35:30', NULL, ''),
 (13, 'Router RFQ', 'Please buy the following routers!', 'P&P', 7, 'Approved', '2023-09-21 02:49:50', NULL, ''),
 (14, 'CSCLAB4 Computer RFQ', 'Please procure 10 units of high configuration Desktop Computers.', 'P&P', 4, 'Approved', '2023-09-21 03:24:08', NULL, ''),
-(15, 'Hello test', 'Testing going', 'CITS', 7, 'Pending', '2023-09-21 09:52:54', NULL, ''),
+(15, 'Hello test', 'Testing going', 'CITS', 7, 'Pending', '2023-09-21 09:52:54', 'Technical Support', 'CITS'),
 (16, 'AC needs to be purchansed', 'need 2 ton ac in the data center', 'P&P', 7, 'Unresolved', '2023-09-21 14:16:05', NULL, ''),
-(18, 'Router required at Fablab', 'Two routers are required to support an event at Fablab.', 'CITS', 7, 'Pending', '2023-11-12 03:57:46', NULL, ''),
-(19, 'Router required at Fablab', 'Router required at Fablab', 'CITS', 7, 'Pending', '2023-11-12 04:08:42', NULL, ''),
+(18, 'Router required at Fablab', 'Two routers are required to support an event at Fablab.', 'CITS', 7, 'Pending', '2023-11-12 03:57:46', 'Network Infrastructure', 'CITS'),
+(19, 'Router required at Fablab', 'Router required at Fablab', 'CITS', 7, 'Pending', '2023-11-12 04:08:42', 'Network Infrastructure', 'CITS'),
 (20, 'Router required at Fablab', 'Router required at Fablab', 'CITS', 7, 'Pending', '2023-11-12 04:10:07', 'Network Infrastructure', 'CITS'),
 (21, 'Lab Computer Number 001 is not working', 'Lab Computer Number 001 is not working', 'CITS', 7, 'Approved', '2023-11-12 05:08:12', 'Computer Labs', 'CITS'),
 (22, 'Router required at Fablab', 'Test purpose', 'CITS', 7, 'Unresolved', '2023-11-12 05:52:16', 'Learning Management Systems (LMS)', 'CITS'),
 (23, 'Router required at Fablab', 'Router required at Fablab', 'CITS', 8, 'Pending', '2023-11-20 22:25:25', 'Learning Management Systems (LMS)', 'CITS'),
-(24, 'Test Subject', 'Test description', 'FAC', 10, 'Pending', '2023-11-21 08:01:02', 'Legal Issue ', ''),
-(25, 'Test Service', 'Test Service', 'FAC', 10, 'Pending', '2023-11-21 08:01:37', 'Legal Issue ', ''),
-(26, 'Legal Issue Test', 'Legal Issue Test', 'FAC', 10, 'Pending', '2023-11-21 08:06:47', 'Legal Issue ', ''),
-(27, 'Test Subject', 'Test description', 'FAC', 7, 'Pending', '2023-11-21 08:08:37', 'Legal Issue ', ''),
-(28, 'Test Subject', 'Test Subject', 'O&M', 7, 'Resolved', '2023-11-21 08:09:50', 'Power Supply and Distribution', ''),
-(29, 'TEST Subject', 'Test Subject', 'CITS', 11, 'Pending', '2023-11-21 08:30:45', 'Email and Communication', ''),
-(30, 'Test Subject', 'Test Description', 'CITS', 12, 'Approved', '2023-11-21 08:39:56', 'Email and Communication', ''),
-(31, 'Test Subject', 'Test Subject', 'O&M', 13, 'Approved', '2023-11-21 09:02:32', 'Generator support', ''),
-(32, 'Test Subject', 'Test Description', 'CITS', 15, 'Approved', '2023-11-21 09:20:13', 'Technical Support', '');
+(24, 'Test Subject', 'Test description', 'FAC', 10, 'Pending', '2023-11-21 08:01:02', 'Legal Issue ', 'Legal Issue '),
+(25, 'Test Service', 'Test Service', 'FAC', 10, 'Pending', '2023-11-21 08:01:37', 'Legal Issue ', 'Legal Issue '),
+(26, 'Legal Issue Test', 'Legal Issue Test', 'FAC', 10, 'Pending', '2023-11-21 08:06:47', 'Legal Issue ', 'Legal Issue '),
+(27, 'Test Subject', 'Test description', 'FAC', 7, 'Pending', '2023-11-21 08:08:37', 'Legal Issue ', 'Legal Issue '),
+(28, 'Test Subject', 'Test Subject', 'O&M', 7, 'Resolved', '2023-11-21 08:09:50', 'Power Supply and Distribution', 'Electrical Works'),
+(29, 'TEST Subject', 'Test Subject', 'CITS', 11, 'Pending', '2023-11-21 08:30:45', 'Email and Communication', 'CITS'),
+(30, 'Test Subject', 'Test Description', 'CITS', 12, 'Approved', '2023-11-21 08:39:56', 'Email and Communication', 'CITS'),
+(31, 'Test Subject', 'Test Subject', 'O&M', 13, 'Approved', '2023-11-21 09:02:32', 'Generator support', 'Electrical Works'),
+(32, 'Test Subject', 'Test Description', 'CITS', 15, 'Approved', '2023-11-21 09:20:13', 'Technical Support', 'CITS'),
+(33, 'Exhaust fan required for server room', 'Exhaust fan required for server room', 'O&M', 8, 'Pending', '2023-11-21 17:42:41', 'Exhaust Fan', 'Electrical Works');
 
 -- --------------------------------------------------------
 
@@ -156,9 +157,9 @@ INSERT INTO `complaints` (`id`, `subject`, `description`, `dept_id`, `user_id`, 
 --
 
 CREATE TABLE `departments` (
-  `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `code` varchar(6) COLLATE utf8mb4_general_ci NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `code` varchar(6) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -183,11 +184,11 @@ INSERT INTO `departments` (`id`, `name`, `code`, `created_at`) VALUES
 --
 
 CREATE TABLE `password_resets` (
-  `id` int NOT NULL,
+  `id` int(11) NOT NULL,
   `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `selector` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `token` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `expires_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `expires_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -197,12 +198,12 @@ CREATE TABLE `password_resets` (
 --
 
 CREATE TABLE `services` (
-  `id` int NOT NULL,
-  `name` text COLLATE utf8mb4_general_ci NOT NULL,
-  `description` text COLLATE utf8mb4_general_ci,
-  `department_id` int DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `category` text COLLATE utf8mb4_general_ci NOT NULL
+  `id` int(11) NOT NULL,
+  `name` text NOT NULL,
+  `description` text DEFAULT NULL,
+  `department_id` int(11) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `category` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -253,13 +254,13 @@ INSERT INTO `services` (`id`, `name`, `description`, `department_id`, `created_a
 --
 
 CREATE TABLE `users` (
-  `id` bigint UNSIGNED NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
   `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `phone` varchar(11) COLLATE utf8mb4_general_ci NOT NULL,
+  `phone` varchar(11) NOT NULL,
   `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
   `role` enum('Admin','Resolver','User') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'User',
-  `dept_id` varchar(6) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `dept_id` varchar(6) DEFAULT NULL,
   `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `profile_picture` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'profileDefault.png',
   `remember_token` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -348,43 +349,43 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `announcements`
 --
 ALTER TABLE `announcements`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=87;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=87;
 
 --
 -- AUTO_INCREMENT for table `complaints`
 --
 ALTER TABLE `complaints`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT for table `departments`
 --
 ALTER TABLE `departments`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `password_resets`
 --
 ALTER TABLE `password_resets`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `services`
 --
 ALTER TABLE `services`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- Constraints for dumped tables
